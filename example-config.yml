@@ -1,9 +1,10 @@
 loglevel: Debug
-WriteDirectory: test_output
-raids:
-  osps-baseline:
+write-directory: output
+services:
+  my-project:
     tactics: 
-      - tlp_red
-      # - tlp_amber
-      # - tlp_green
-      # - tlp_clear
+      - maturity_1
+      - maturity_2
+      - maturity_3
+    vars:
+      repo_url: https://github.com/myorg/myrepo

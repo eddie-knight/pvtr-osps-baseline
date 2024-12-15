@@ -4,8 +4,6 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-
-	"github.com/privateerproj/privateer-raid-osps-baseline/armory"
 )
 
 var (
@@ -14,7 +12,7 @@ var (
 		Use:   "debug",
 		Short: "Run the Raid in debug mode",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := Vessel.Mobilize(&armory.Armory, nil) // Replace nil with a slice of your required var names
+			err := Vessel.Mobilize() // Replace nil with a slice of your required var names
 			if err != nil {
 				log.Fatal(err)
 			}

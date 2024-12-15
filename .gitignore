@@ -1,0 +1,5 @@
+# ignore the generated binary
+osps-baseline
+
+# ignore any local dev config file
+config.yml
