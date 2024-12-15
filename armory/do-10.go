@@ -5,8 +5,8 @@ import (
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_010() (strikeName string, result raidengine.StrikeResult) {
-	strikeName = "DO_010"
+func DO_10() (strikeName string, result raidengine.StrikeResult) {
+	strikeName = "DO_10"
 	result = raidengine.StrikeResult{
 		Passed:      false,
 		Description: "The project documentation MUST include a policy to address SCA violations prior to any release.",
@@ -14,18 +14,18 @@ func DO_010() (strikeName string, result raidengine.StrikeResult) {
 		Movements:   make(map[string]raidengine.MovementResult),
 	}
 
-	result.ExecuteMovement(DO_010_T01)
+	result.ExecuteMovement(DO_10_T01)
 
 	return
 }
 
 // TODO
-func DO_010_T01() (moveResult raidengine.MovementResult) {
+func DO_10_T01() (moveResult raidengine.MovementResult) {
 	moveResult = raidengine.MovementResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to DO_010
+	// TODO: Use this section to write a single step or test that contributes to DO_10
 	return
 }
