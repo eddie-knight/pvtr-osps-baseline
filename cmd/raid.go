@@ -8,7 +8,7 @@ import (
 
 var (
 	Vessel = raidengine.Vessel{
-		RaidName: "osps-baseline", // Double check that this is what you want the raid to be named
+		RaidName: "osps-baseline",
 		Armory:   &armory.Armory,
 		RequiredVars: []string{
 			"repo_url",
@@ -20,6 +20,6 @@ type Raid struct{}
 
 // Raid.Start() is called by plugin.Serve
 func (r *Raid) Start() (err error) {
-	err = Vessel.Mobilize() // Replace nil with a slice of your required var names
+	err = Vessel.Mobilize()
 	return
 }

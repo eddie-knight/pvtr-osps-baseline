@@ -12,7 +12,7 @@ var (
 		Use:   "debug",
 		Short: "Run the Raid in debug mode",
 		Run: func(cmd *cobra.Command, args []string) {
-			err := Vessel.Mobilize() // Replace nil with a slice of your required var names
+			err := Vessel.Mobilize()
 			if err != nil {
 				log.Fatal(err)
 			}
