@@ -20,12 +20,13 @@ func DO_01() (strikeName string, result raidengine.StrikeResult) {
 }
 
 // TODO
-func DO_01_T01() (moveResult raidengine.MovementResult) {
-	moveResult = raidengine.MovementResult{
-		Description: "This movement is still under construction",
-		Function:    utils.CallerPath(0),
-	}
+func DO_01_T01() raidengine.MovementResult {
+	rawData, _ := Config.GetVar("repo_data")
+	repoData := rawData.(RepoData)
 
-	// TODO: Use this section to write a single step or test that contributes to DO_01
-	return
+	return raidengine.MovementResult{
+		Description: "Inspecting whether issues or discussions are enabled on the repo.",
+		Function:    utils.CallerPath(0),
+		Passed:      repoData.HasIssues || repoData.HasDiscussions,
+	}
 }

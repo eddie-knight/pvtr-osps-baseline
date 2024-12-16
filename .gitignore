@@ -1,5 +1,6 @@
-# ignore the generated binary
+# ignore the generated artifacts
 osps-baseline
+output
 
 # ignore any local dev config file
 config.yml
