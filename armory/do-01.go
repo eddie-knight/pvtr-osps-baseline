@@ -1,6 +1,7 @@
 package armory
 
 import (
+	"github.com/eddie-knight/raid-osps-baseline/transport"
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -22,7 +23,7 @@ func DO_01() (strikeName string, result raidengine.StrikeResult) {
 // TODO
 func DO_01_T01() raidengine.MovementResult {
 	rawData, _ := Config.GetVar("repo_data")
-	repoData := rawData.(RepoData)
+	repoData := rawData.(transport.RepoData)
 
 	return raidengine.MovementResult{
 		Description: "Inspecting whether issues or discussions are enabled on the repo.",

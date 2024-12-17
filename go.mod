@@ -1,4 +1,4 @@
-module github.com/privateerproj/privateer-raid-osps-baseline // Replace this globally with your module name
+module github.com/eddie-knight/raid-osps-baseline // Replace this globally with your module name
 
 go 1.23
 

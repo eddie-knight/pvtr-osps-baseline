@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/privateerproj/privateer-raid-osps-baseline/cmd"
+	"github.com/eddie-knight/raid-osps-baseline/cmd"
 )
 
 var (
