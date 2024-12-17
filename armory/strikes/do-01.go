@@ -19,7 +19,6 @@ func DO_01() (strikeName string, result raidengine.StrikeResult) {
 	return
 }
 
-// TODO
 func DO_01_T01() raidengine.MovementResult {
 	rawData, _ := Config.GetVar("repo_data")
 	repoData := rawData.(RepoData)
