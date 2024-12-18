@@ -3,7 +3,7 @@ module github.com/eddie-knight/raid-osps-baseline // Replace this globally with 
 go 1.23
 
 require (
-	github.com/privateerproj/privateer-sdk v0.0.15
+	github.com/privateerproj/privateer-sdk v0.0.16
 	github.com/shurcooL/githubv4 v0.0.0-20240727222349-48295856cce7
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
