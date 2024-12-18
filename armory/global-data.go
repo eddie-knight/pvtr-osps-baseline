@@ -26,9 +26,24 @@ type RepoData struct {
 		HasDiscussionsEnabled   bool
 		HasIssuesEnabled        bool
 		IsSecurityPolicyEnabled bool
+		DefaultBranchRef		struct{
+			Name				string
+			RefUpdateRule		struct{
+				AllowsDeletions					bool
+				AllowsForcePushes				bool
+				RequiredApprovingReviewCount	bool
+			}
+		}
 		Releases                struct {
 			TotalCount int
 		}
+		// BranchProtectionRule	struct{
+		// // 	allowsForcePushes			bool
+		// // 	requiresApprovingReviews	bool
+		// // 	restrictsPushes				bool
+		// // 	allowsDeletions				bool
+		// 	RequiresStatusChecks		bool
+		// }
 		LatestRelease struct {
 			Description string
 		}
