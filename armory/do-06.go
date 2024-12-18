@@ -26,6 +26,6 @@ func DO_06_T01() (moveResult raidengine.MovementResult) {
 		Function:    utils.CallerPath(0),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to DO_07
+	// TODO: Use this section to write a single step or test that contributes to DO_06
 	return
 }
