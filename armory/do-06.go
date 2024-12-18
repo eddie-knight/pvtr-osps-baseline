@@ -11,46 +11,21 @@ func DO_06() (strikeName string, result raidengine.StrikeResult) {
 	strikeName = "DO_06"
 	result = raidengine.StrikeResult{
 		Passed:      false,
-		Description: "All releases MUST provide a descriptive log of functional and security modifications.",
+		Description: "The project documentation MUST include a guide for code contributors that includes requirements for acceptable contributions.",
 		ControlID:   "OSPS-DO-06",
 		Movements:   make(map[string]raidengine.MovementResult),
 	}
 
 	result.ExecuteMovement(DO_06_T01)
-	if result.Movements["DO_06_T01"].Value == "Releases Found" {
-		result.ExecuteMovement(DO_06_T02)
-	}
 	return
 }
 
 func DO_06_T01() (moveResult raidengine.MovementResult) {
 	moveResult = raidengine.MovementResult{
-		Description: "Checking whether project has releases, passing if no releases are present",
+		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
 
-	data := GetData(Config)
-
-	if data.Repository.Releases.TotalCount > 0 {
-		moveResult.Value = "Releases Found"
-	} else {
-		moveResult.Passed = true
-		moveResult.Value = "Releases Not Found"
-	}
-	// TODO: Use this section to write a single step or test that contributes to DO_01
-	return
-}
-
-func DO_06_T02() (moveResult raidengine.MovementResult) {
-	moveResult = raidengine.MovementResult{
-		Description: "Checking whether project has releases, passing if no releases are present",
-		Function:    utils.CallerPath(0),
-	}
-
-	releaseDescription := GetData(Config).Repository.LatestRelease.Description
-
-	if strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog") {
-		moveResult.Passed = true
-	}
+	// TODO: Use this section to write a single step or test that contributes to DO_07
 	return
 }
