@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -19,17 +21,13 @@ func DO_04() (strikeName string, result raidengine.StrikeResult) {
 	return
 }
 
-func DO_04_T01() (moveResult raidengine.MovementResult) {
-	moveResult = raidengine.MovementResult{
-		Description: "This movement is still under construction",
+func DO_04_T01() raidengine.MovementResult {
+	enabled := GetData(Config).Repository.IsSecurityPolicyEnabled
+
+	return raidengine.MovementResult{
+		Description: "Discover whether a security policy is enabled for this repo.",
 		Function:    utils.CallerPath(0),
+		Passed:      enabled,
+		Message:     fmt.Sprintf("Security Policy Enabled: %v", enabled),
 	}
-
-	data := GetData(Config)
-
-	if data.Repository.IsSecurityPolicyEnabled {
-		moveResult.Passed = true
-	}
-
-	return
 }

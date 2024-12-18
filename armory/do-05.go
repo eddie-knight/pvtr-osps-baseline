@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -20,10 +22,12 @@ func DO_05() (strikeName string, result raidengine.StrikeResult) {
 }
 
 func DO_05_T01() (moveResult raidengine.MovementResult) {
+	enabled := GetData(Config).Repository.HasIssuesEnabled
 	moveResult = raidengine.MovementResult{
 		Description: "Checking to see whether the GitHub repo has issues enabled",
 		Function:    utils.CallerPath(0),
-		Passed:      GetData(Config).Repository.HasIssuesEnabled,
+		Passed:      enabled,
+		Message:     fmt.Sprintf("Issues Enabled: %v", enabled),
 	}
 
 	return

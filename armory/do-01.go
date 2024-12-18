@@ -21,11 +21,20 @@ func DO_01() (strikeName string, result raidengine.StrikeResult) {
 
 // TODO
 func DO_01_T01() raidengine.MovementResult {
-	data := GetData(Config)
+	repoData := GetData(Config).Repository
+
+	var message string
+	if repoData.HasDiscussionsEnabled {
+		message = "Discussions are enabled. "
+	}
+	if repoData.HasIssuesEnabled {
+		message = message + "Issues are enabled."
+	}
 
 	return raidengine.MovementResult{
-		Description: "Inspecting whether issues or discussions are enabled on the repo.",
+		Description: "Discover whether issues or discussions are enabled on the repo.",
 		Function:    utils.CallerPath(0),
-		Passed:      data.Repository.HasDiscussionsEnabled, // TODO: || data.Repository.HasIssuesEnabled
+		Message:     message,
+		Passed:      repoData.HasDiscussionsEnabled || repoData.HasIssuesEnabled,
 	}
 }
