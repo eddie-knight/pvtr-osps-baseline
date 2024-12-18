@@ -21,10 +21,10 @@ func DO_05() (strikeName string, result raidengine.StrikeResult) {
 
 func DO_05_T01() (moveResult raidengine.MovementResult) {
 	moveResult = raidengine.MovementResult{
-		Description: "This movement is still under construction",
+		Description: "Checking to see whether the GitHub repo has issues enabled",
 		Function:    utils.CallerPath(0),
+		Passed:      GetData(Config).Repository.HasIssuesEnabled,
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to DO_01
 	return
 }

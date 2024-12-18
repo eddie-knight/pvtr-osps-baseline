@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"strings"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -21,10 +23,17 @@ func DO_02() (strikeName string, result raidengine.StrikeResult) {
 
 func DO_02_T01() (moveResult raidengine.MovementResult) {
 	moveResult = raidengine.MovementResult{
-		Description: "This movement is still under construction",
+		Description: "Inspecting the GitHub repo's recommended contributing guidelines to ensure it is not empty.",
 		Function:    utils.CallerPath(0),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to DO_01
+	data := GetData(Config)
+	body := data.Repository.ContributingGuidelines.Body
+	if strings.Contains(body, "Contributing") {
+		moveResult.Passed = true
+	} else {
+		moveResult.Passed = false
+	}
+
 	return
 }

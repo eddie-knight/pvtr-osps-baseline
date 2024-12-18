@@ -4,8 +4,10 @@ go 1.23
 
 require (
 	github.com/privateerproj/privateer-sdk v0.0.15
+	github.com/shurcooL/githubv4 v0.0.0-20240727222349-48295856cce7
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
+	golang.org/x/oauth2 v0.18.0
 )
 
 require (
@@ -25,6 +27,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.2.2 // indirect
 	github.com/sagikazarmark/locafero v0.4.0 // indirect
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
+	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.11.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
@@ -36,6 +39,7 @@ require (
 	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/sys v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
+	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240314234333-6e1732d8331c // indirect
 	google.golang.org/grpc v1.62.1 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect

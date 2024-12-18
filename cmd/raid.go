@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"github.com/eddie-knight/raid-osps-baseline/armory"
-	"github.com/eddie-knight/raid-osps-baseline/transport"
 
 	"github.com/privateerproj/privateer-sdk/config"
 	"github.com/privateerproj/privateer-sdk/raidengine"
@@ -30,10 +29,7 @@ func (r *Raid) Start() (err error) {
 
 func initializer(c *config.Config) (err error) {
 	armory.Config = c // for strikes to reference. TODO: not sure yet whether this mitigates the need for armory.Armory.Config
-	repoData, err := transport.GetRepoData(c)
-	if err != nil {
-		return
-	}
-	c.Vars["repo_data"] = repoData
+
+	armory.GetData(c)
 	return
 }
