@@ -25,8 +25,6 @@ func BR_05_T01() (moveResult raidengine.MovementResult) {
 		Function:    utils.CallerPath(0),
 	}
 
-	Config.Logger.Trace("!!!")
-
 	// TODO: Use this section to write a single step or test that contributes to BR_01
 	return
 }
