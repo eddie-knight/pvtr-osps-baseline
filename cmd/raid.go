@@ -28,8 +28,6 @@ func (r *Raid) Start() (err error) {
 }
 
 func initializer(c *config.Config) (err error) {
-	armory.Config = c // for strikes to reference. TODO: not sure yet whether this mitigates the need for armory.Armory.Config
-
-	armory.GetData(c)
+	armory.SetupArmory(c)
 	return
 }

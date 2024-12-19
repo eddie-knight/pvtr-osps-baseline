@@ -1,15 +1,16 @@
 package armory
 
 import (
+	"github.com/hashicorp/go-hclog"
 	"github.com/privateerproj/privateer-sdk/config"
 	"github.com/privateerproj/privateer-sdk/raidengine"
 )
 
 var (
-	Config *config.Config
-	Armory = raidengine.Armory{
+	GlobalConfig *config.Config
+	Logger       hclog.Logger
+	Armory       = raidengine.Armory{
 		Tactics: map[string][]raidengine.Strike{
-			"dev_unauthenticated": {}, // this will automatically be selected instead of 'dev' when a token is not provided
 			"dev": {
 				DO_01,
 				DO_02,
@@ -17,7 +18,6 @@ var (
 				DO_05,
 				DO_06,
 			},
-			"maturity_1_unauthenticated": {}, // this will automatically be selected instead of 'maturity_1' when a token is not provided
 			"maturity_1": {
 				AC_01,
 				AC_02,
@@ -34,7 +34,6 @@ var (
 				QA_01,
 				QA_02,
 			},
-			"maturity_2_unauthenticated": {}, // this will automatically be selected instead of 'maturity_2' when a token is not provided
 			"maturity_2": {
 				AC_05,
 				BR_04,
@@ -54,7 +53,6 @@ var (
 				QA_05,
 				QA_06,
 			},
-			"maturity_3_unauthenticated": {}, // this will automatically be selected instead of 'maturity_3' when a token is not provided
 			"maturity_3": {
 				AC_06,
 				DO_08,
@@ -65,3 +63,20 @@ var (
 		},
 	}
 )
+
+func SetupArmory(c *config.Config) {
+	GlobalConfig = c
+	Logger = c.Logger
+	if c.GetString("token") == "" {
+		Armory.Tactics = unauthenticatedTactics()
+	}
+}
+
+func unauthenticatedTactics() map[string][]raidengine.Strike {
+	return map[string][]raidengine.Strike{
+		"dev":        {},
+		"maturity_1": {},
+		"maturity_2": {},
+		"maturity_3": {},
+	}
+}

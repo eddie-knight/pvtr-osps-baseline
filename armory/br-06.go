@@ -29,7 +29,7 @@ func BR_06_T01() (moveResult raidengine.MovementResult) {
 		Function:    utils.CallerPath(0),
 	}
 
-	data := GetData(Config)
+	data := GetData()
 
 	if data.Repository.Releases.TotalCount > 0 {
 		moveResult.Value = "Releases Found"
@@ -47,7 +47,7 @@ func BR_06_T02() (moveResult raidengine.MovementResult) {
 		Function:    utils.CallerPath(0),
 	}
 
-	releaseDescription := GetData(Config).Repository.LatestRelease.Description
+	releaseDescription := GetData().Repository.LatestRelease.Description
 
 	if strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog") {
 		moveResult.Passed = true

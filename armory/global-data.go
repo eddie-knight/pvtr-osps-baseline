@@ -3,11 +3,11 @@ package armory
 import (
 	"context"
 
-	"github.com/privateerproj/privateer-sdk/config"
 	"github.com/shurcooL/githubv4"
-	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 )
+
+var Authenticated bool
 
 type RepoData struct {
 	// Need to update token for this
@@ -65,30 +65,14 @@ type RepoData struct {
 
 var GlobalData RepoData
 
-func GetData(c *config.Config) RepoData {
+func GetData() RepoData {
 	if GlobalData.Repository.Name != "" {
 		return GlobalData
 	}
-
-	if c.GetString("token") == "" {
-		// TODO: Add unauthenticated data retrieval
-		var updatedTactics []string
-		for _, tactic := range viper.GetStringSlice("tactics") {
-			// append _unauthenticated to each requested tactic name
-			updatedTactics = append(updatedTactics, tactic+"_unauthenticated")
-		}
-		viper.Set("tactics", updatedTactics)
-		return GlobalData
-	} else {
-		return getGraphqlData(c)
-	}
-}
-
-func getGraphqlData(c *config.Config) RepoData {
-	owner := c.GetString("owner")
-	repo := c.GetString("repo")
+	owner := GlobalConfig.GetString("owner")
+	repo := GlobalConfig.GetString("repo")
 	src := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: c.GetString("token")},
+		&oauth2.Token{AccessToken: GlobalConfig.GetString("token")},
 	)
 	httpClient := oauth2.NewClient(context.Background(), src)
 
@@ -101,7 +85,7 @@ func getGraphqlData(c *config.Config) RepoData {
 
 	err := client.Query(context.Background(), &GlobalData, variables)
 	if err != nil {
-		c.Logger.Error("Error querying GitHub GraphQL API: ", err)
+		Logger.Error("Error querying GitHub GraphQL API: ", err)
 	}
 	return GlobalData
 }

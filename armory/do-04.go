@@ -22,7 +22,7 @@ func DO_04() (strikeName string, result raidengine.StrikeResult) {
 }
 
 func DO_04_T01() raidengine.MovementResult {
-	enabled := GetData(Config).Repository.IsSecurityPolicyEnabled
+	enabled := GetData().Repository.IsSecurityPolicyEnabled
 
 	return raidengine.MovementResult{
 		Description: "Discover whether a security policy is enabled for this repo.",

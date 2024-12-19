@@ -24,7 +24,7 @@ func DO_02() (strikeName string, result raidengine.StrikeResult) {
 
 func DO_02_T01() raidengine.MovementResult {
 
-	body := GetData(Config).Repository.ContributingGuidelines.Body
+	body := GetData().Repository.ContributingGuidelines.Body
 	containsGuidelines := strings.Contains(body, "Contributing")
 
 	return raidengine.MovementResult{
@@ -33,5 +33,4 @@ func DO_02_T01() raidengine.MovementResult {
 		Passed:      containsGuidelines,
 		Message:     fmt.Sprintf("Contributing Guidelines Found: %v", containsGuidelines),
 	}
-
 }
