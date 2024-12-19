@@ -2,10 +2,10 @@ package armory
 
 import (
 	"context"
-	"log"
 
 	"github.com/privateerproj/privateer-sdk/config"
 	"github.com/shurcooL/githubv4"
+	"github.com/spf13/viper"
 	"golang.org/x/oauth2"
 )
 
@@ -26,15 +26,15 @@ type RepoData struct {
 		HasDiscussionsEnabled   bool
 		HasIssuesEnabled        bool
 		IsSecurityPolicyEnabled bool
-		DefaultBranchRef		struct{
-			Name				string
-			RefUpdateRule		struct{
-				AllowsDeletions					bool
-				AllowsForcePushes				bool
-				RequiredApprovingReviewCount	bool
+		DefaultBranchRef        struct {
+			Name          string
+			RefUpdateRule struct {
+				AllowsDeletions              bool
+				AllowsForcePushes            bool
+				RequiredApprovingReviewCount bool
 			}
 		}
-		Releases                struct {
+		Releases struct {
 			TotalCount int
 		}
 		// BranchProtectionRule	struct{
@@ -70,6 +70,21 @@ func GetData(c *config.Config) RepoData {
 		return GlobalData
 	}
 
+	if c.GetString("token") == "" {
+		// TODO: Add unauthenticated data retrieval
+		var updatedTactics []string
+		for _, tactic := range viper.GetStringSlice("tactics") {
+			// append _unauthenticated to each requested tactic name
+			updatedTactics = append(updatedTactics, tactic+"_unauthenticated")
+		}
+		viper.Set("tactics", updatedTactics)
+		return GlobalData
+	} else {
+		return getGraphqlData(c)
+	}
+}
+
+func getGraphqlData(c *config.Config) RepoData {
 	owner := c.GetString("owner")
 	repo := c.GetString("repo")
 	src := oauth2.StaticTokenSource(
@@ -78,19 +93,15 @@ func GetData(c *config.Config) RepoData {
 	httpClient := oauth2.NewClient(context.Background(), src)
 
 	client := githubv4.NewClient(httpClient)
-	return makeQuery(client, owner, repo)
-}
 
-func makeQuery(client *githubv4.Client, owner, name string) RepoData {
 	variables := map[string]interface{}{
 		"owner": githubv4.String(owner),
-		"name":  githubv4.String(name),
+		"name":  githubv4.String(repo),
 	}
 
 	err := client.Query(context.Background(), &GlobalData, variables)
 	if err != nil {
-		log.Print(err)
+		c.Logger.Error("Error querying GitHub GraphQL API: ", err)
 	}
-
 	return GlobalData
 }
