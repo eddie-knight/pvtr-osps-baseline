@@ -28,25 +28,22 @@ func BR_06() (strikeName string, result raidengine.StrikeResult) {
 func BR_06_T01() (moveResult raidengine.MovementResult) {
 	releaseCount := GetData().Repository.Releases.TotalCount
 
-	moveResult = raidengine.MovementResult{
+	return raidengine.MovementResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
 		Passed:      true,
 		Message:     fmt.Sprintf("Releases Found: %v", releaseCount),
-	}
-	return
+  }
 }
 
 func BR_06_T02() (moveResult raidengine.MovementResult) {
 	releaseDescription := GetData().Repository.LatestRelease.Description
 	contains := (strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog"))
 
-	moveResult = raidengine.MovementResult{
+	return raidengine.MovementResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
 		Passed:      contains,
 		Message:     fmt.Sprintf("Change Log Found in Latest Release: %v", contains),
 	}
-
-	return
 }
