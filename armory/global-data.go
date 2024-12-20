@@ -12,15 +12,9 @@ var Authenticated bool
 
 type RepoData struct {
 	// Need to update token for this
-	// Organization struct {
-	// 	Rulesets struct {
-	// 		Nodes []struct {
-	// 			BypassActors struct {
-	// 				TotalCount int
-	// 			}
-	// 		}
-	// 	} `graphql:"rulesets(first: 10)"`
-	// } `graphql:"organization(login: $owner)"`
+	Organization struct {
+		RequiresTwoFactorAuthentication bool
+	} `graphql:"organization(login: $owner)"`
 
 	Repository struct {
 		Name                    string
