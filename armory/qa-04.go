@@ -5,10 +5,8 @@ import (
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func QA_04() (strikeName string, result raidengine.StrikeResult) {
-	strikeName = "QA_04"
-	result = raidengine.StrikeResult{
-		Passed:      false,
+func QA_04() (string, raidengine.StrikeResult) {
+	result := raidengine.StrikeResult{
 		Description: "Any automated status checks for commits MUST pass or require manual acknowledgement prior to merge.",
 		ControlID:   "OSPS-QA-04",
 		Movements:   make(map[string]raidengine.MovementResult),
@@ -16,15 +14,15 @@ func QA_04() (strikeName string, result raidengine.StrikeResult) {
 
 	result.ExecuteMovement(QA_04_T01)
 
-	return
+	return "QA_04", result
 }
 
-func QA_04_T01() (moveResult raidengine.MovementResult) {
-	moveResult = raidengine.MovementResult{
+func QA_04_T01() raidengine.MovementResult {
+	moveResult := raidengine.MovementResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to QA_04
-	return
+	return moveResult
 }
