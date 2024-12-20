@@ -7,7 +7,7 @@ import (
 
 func QA_01() (string, raidengine.StrikeResult) {
 	result := raidengine.StrikeResult{
-		Description: "The project’s source code MUST be publicly readable and have a static URL.",
+		Description: "The project's source code MUST be publicly readable and have a static URL.",
 		ControlID:   "OSPS-QA-01",
 		Movements:   make(map[string]raidengine.MovementResult),
 	}

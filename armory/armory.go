@@ -6,10 +6,17 @@ import (
 	"github.com/privateerproj/privateer-sdk/raidengine"
 )
 
+type ArmoryData struct {
+	graphql GraphqlData
+	rest    RestData
+}
+
 var (
-	GlobalConfig *config.Config
-	Logger       hclog.Logger
-	Armory       = raidengine.Armory{
+	Authenticated bool // might not need this
+	GlobalConfig  *config.Config
+	Logger        hclog.Logger
+	Data          ArmoryData
+	Armory        = raidengine.Armory{
 		Tactics: map[string][]raidengine.Strike{
 			"dev": {
 				DO_01,
