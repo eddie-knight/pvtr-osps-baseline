@@ -8,10 +8,8 @@ import (
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func BR_06() (strikeName string, result raidengine.StrikeResult) {
-	strikeName = "BR_06"
-	result = raidengine.StrikeResult{
-		Passed:      false,
+func BR_06() (string, raidengine.StrikeResult) {
+	result := raidengine.StrikeResult{
 		Description: "All releases MUST provide a descriptive log of functional and security modifications.",
 		ControlID:   "OSPS-BR-06",
 		Movements:   make(map[string]raidengine.MovementResult),
@@ -22,10 +20,10 @@ func BR_06() (strikeName string, result raidengine.StrikeResult) {
 		Logger.Trace("Releases Found, checking for Change Log")
 		result.ExecuteMovement(BR_06_T02)
 	}
-	return
+	return "BR_06", result
 }
 
-func BR_06_T01() (moveResult raidengine.MovementResult) {
+func BR_06_T01() raidengine.MovementResult {
 	releaseCount := GetData().Repository.Releases.TotalCount
 
 	return raidengine.MovementResult{
@@ -33,17 +31,18 @@ func BR_06_T01() (moveResult raidengine.MovementResult) {
 		Function:    utils.CallerPath(0),
 		Passed:      true,
 		Message:     fmt.Sprintf("Releases Found: %v", releaseCount),
-  }
+	}
 }
 
-func BR_06_T02() (moveResult raidengine.MovementResult) {
+func BR_06_T02() raidengine.MovementResult {
 	releaseDescription := GetData().Repository.LatestRelease.Description
 	contains := (strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog"))
 
-	return raidengine.MovementResult{
+	moveResult := raidengine.MovementResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
 		Passed:      contains,
 		Message:     fmt.Sprintf("Change Log Found in Latest Release: %v", contains),
 	}
+	return moveResult
 }

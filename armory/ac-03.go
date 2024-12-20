@@ -5,9 +5,8 @@ import (
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func AC_03() (strikeName string, result raidengine.StrikeResult) {
-	strikeName = "AC_03"
-	result = raidengine.StrikeResult{
+func AC_03() (string, raidengine.StrikeResult) {
+	result := raidengine.StrikeResult{
 		Description: "The project's version control system MUST prevent unintentional direct commits against the primary branch.",
 		ControlID:   "OSPS-AC-03",
 		Movements:   make(map[string]raidengine.MovementResult),
@@ -15,11 +14,12 @@ func AC_03() (strikeName string, result raidengine.StrikeResult) {
 
 	result.ExecuteMovement(AC_03_T01)
 
-	return
+	return "AC_03", result
 }
 
 func AC_03_T01() (moveResult raidengine.MovementResult) {
 	protectionData := GetData().Repository.DefaultBranchRef.BranchProtectionRule
+  // TODO: check rulesets also
 
 	var message string
 	if protectionData.RestrictsPushes {
@@ -28,12 +28,12 @@ func AC_03_T01() (moveResult raidengine.MovementResult) {
 		message = "Branch protection rule requires approving reviews"
 	}
 
-	moveResult = raidengine.MovementResult{
+  moveResult := raidengine.MovementResult{
 		Description: "Inspect default branch for a protection rule that restricts pushes",
 		Function:    utils.CallerPath(0),
 		Passed:      protectionData.RestrictsPushes || protectionData.RequiresApprovingReviews,
 		Message:     message,
 	}
 
-	return
+	return moveResult
 }
