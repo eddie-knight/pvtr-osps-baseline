@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -19,11 +21,14 @@ func QA_01() (string, raidengine.StrikeResult) {
 
 // TODO
 func QA_01_T01() raidengine.MovementResult {
+	isPrivate := Data.Rest().Repo.Private
+
 	moveResult := raidengine.MovementResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
+		Passed:      !isPrivate,
+		Message:     fmt.Sprintf("Public Repo: %v", !isPrivate),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to QA_01
 	return moveResult
 }

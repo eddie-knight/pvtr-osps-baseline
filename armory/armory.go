@@ -12,7 +12,7 @@ type ArmoryData struct {
 }
 
 var (
-	Authenticated bool // might not need this
+	Authenticated bool
 	GlobalConfig  *config.Config
 	Logger        hclog.Logger
 	Data          ArmoryData
@@ -25,6 +25,7 @@ var (
 				DO_05,
 				BR_06,
 				AC_01,
+				QA_01,
 			},
 			"maturity_1": {
 				AC_01,
@@ -77,14 +78,32 @@ func SetupArmory(c *config.Config) {
 	Logger = c.Logger
 	if c.GetString("token") == "" {
 		Armory.Tactics = unauthenticatedTactics()
+	} else {
+		Authenticated = true
 	}
 }
 
 func unauthenticatedTactics() map[string][]raidengine.Strike {
 	return map[string][]raidengine.Strike{
-		"dev":        {},
+		"dev": {
+			QA_01,
+		},
 		"maturity_1": {},
 		"maturity_2": {},
 		"maturity_3": {},
 	}
+}
+
+func (r *ArmoryData) Rest() RestData {
+	if r.rest.repo == "" {
+		r.rest.loadData()
+	}
+	return r.rest
+}
+
+func (r *ArmoryData) GraphQL() GraphqlData {
+	if r.graphql.Repository.Name == "" {
+		r.loadGraphQLData()
+	}
+	return r.graphql
 }

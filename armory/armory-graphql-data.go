@@ -56,13 +56,6 @@ type GraphqlData struct {
 	} `graphql:"repository(owner: $owner, name: $name)"`
 }
 
-func (r *ArmoryData) GraphQL() GraphqlData {
-	if r.graphql.Repository.Name == "" {
-		r.loadGraphQLData()
-	}
-	return r.graphql
-}
-
 func (r *ArmoryData) loadGraphQLData() error {
 	src := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: GlobalConfig.GetString("token")},
