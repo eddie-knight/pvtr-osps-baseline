@@ -23,22 +23,21 @@ type RepoData struct {
 		IsSecurityPolicyEnabled bool
 		DefaultBranchRef        struct {
 			Name          string
-			RefUpdateRule struct {
+			RefUpdateRule struct { // Docs say this works for non-admin viewers, but I haven't managed to do that yet
 				AllowsDeletions              bool
 				AllowsForcePushes            bool
 				RequiredApprovingReviewCount int
+			}
+			BranchProtectionRule struct {
+				RestrictsPushes          bool // This didn't give an accurate result
+				RequiresApprovingReviews bool // This gave an accurate result
+				RequiresCommitSignatures bool
+				RequiresStatusChecks     bool
 			}
 		}
 		Releases struct {
 			TotalCount int
 		}
-		// BranchProtectionRule	struct{
-		// // 	allowsForcePushes			bool
-		// // 	requiresApprovingReviews	bool
-		// // 	restrictsPushes				bool
-		// // 	allowsDeletions				bool
-		// 	RequiresStatusChecks		bool
-		// }
 		LatestRelease struct {
 			Description string
 		}
@@ -46,15 +45,6 @@ type RepoData struct {
 			Body         string
 			ResourcePath githubv4.URI
 		}
-		BranchProtectionRules struct {
-			Nodes []struct {
-				AllowsDeletions          bool
-				AllowsForcePushes        bool
-				RequiresApprovingReviews bool
-				RequiresCommitSignatures bool
-				RequiresStatusChecks     bool
-			}
-		} `graphql:"branchProtectionRules(first: 10)"`
 	} `graphql:"repository(owner: $owner, name: $name)"`
 }
 
