@@ -26,6 +26,7 @@ var (
 				BR_06,
 				AC_01,
 				QA_01,
+				BR_02,
 			},
 			"maturity_1": {
 				AC_01,
@@ -87,6 +88,7 @@ func unauthenticatedTactics() map[string][]raidengine.Strike {
 	return map[string][]raidengine.Strike{
 		"dev": {
 			QA_01,
+			BR_02,
 		},
 		"maturity_1": {},
 		"maturity_2": {},
