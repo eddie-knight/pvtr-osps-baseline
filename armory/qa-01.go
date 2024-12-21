@@ -19,12 +19,11 @@ func QA_01() (string, raidengine.StrikeResult) {
 	return "QA_01", result
 }
 
-// TODO
 func QA_01_T01() raidengine.MovementResult {
 	isPrivate := Data.Rest().Repo.Private
 
 	moveResult := raidengine.MovementResult{
-		Description: "This movement is still under construction",
+		Description: "Verifying that the GitHub repository is public at the target URL.",
 		Function:    utils.CallerPath(0),
 		Passed:      !isPrivate,
 		Message:     fmt.Sprintf("Public Repo: %v", !isPrivate),
