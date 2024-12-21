@@ -62,6 +62,5 @@ func BR_02_T02() raidengine.MovementResult {
 		Message:     fmt.Sprintf("Non-unique release names: %v", errorCount),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to BR_01
 	return moveResult
 }
