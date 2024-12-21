@@ -17,9 +17,9 @@ func AC_03() (string, raidengine.StrikeResult) {
 	return "AC_03", result
 }
 
-func AC_03_T01() (moveResult raidengine.MovementResult) {
-	protectionData := GetData().Repository.DefaultBranchRef.BranchProtectionRule
-  // TODO: check rulesets also
+func AC_03_T01() raidengine.MovementResult {
+	protectionData := Data.GraphQL().Repository.DefaultBranchRef.BranchProtectionRule
+	// TODO: check rulesets also
 
 	var message string
 	if protectionData.RestrictsPushes {
@@ -28,7 +28,7 @@ func AC_03_T01() (moveResult raidengine.MovementResult) {
 		message = "Branch protection rule requires approving reviews"
 	}
 
-  moveResult := raidengine.MovementResult{
+	moveResult := raidengine.MovementResult{
 		Description: "Inspect default branch for a protection rule that restricts pushes",
 		Function:    utils.CallerPath(0),
 		Passed:      protectionData.RestrictsPushes || protectionData.RequiresApprovingReviews,

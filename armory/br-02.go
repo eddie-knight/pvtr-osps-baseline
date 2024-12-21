@@ -59,7 +59,7 @@ func BR_02_T02() raidengine.MovementResult {
 		Description: "Ensure all releases have a unique name",
 		Function:    utils.CallerPath(0),
 		Passed:      errorCount == 0,
-		Message:     fmt.Sprintf("Repeated release names: %v/%v", errorCount, len(releases)),
+		Message:     fmt.Sprintf("Release names repeated: %v (of %v found)", errorCount, len(releases)),
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to BR_01
