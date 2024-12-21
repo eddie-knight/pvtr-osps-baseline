@@ -20,13 +20,19 @@ func QA_01() (string, raidengine.StrikeResult) {
 }
 
 func QA_01_T01() raidengine.MovementResult {
+	gotRepoData := Data.Rest().Repo.Name != ""
 	isPrivate := Data.Rest().Repo.Private
 
 	moveResult := raidengine.MovementResult{
 		Description: "Verifying that the GitHub repository is public at the target URL.",
 		Function:    utils.CallerPath(0),
-		Passed:      !isPrivate,
-		Message:     fmt.Sprintf("Public Repo: %v", !isPrivate),
+		Passed:      gotRepoData && !isPrivate,
+	}
+
+	if !gotRepoData {
+		moveResult.Message = "Repository data not found"
+	} else {
+		moveResult.Message = fmt.Sprintf("Public Repo: %t", !isPrivate)
 	}
 
 	return moveResult
