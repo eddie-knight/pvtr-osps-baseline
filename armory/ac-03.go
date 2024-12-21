@@ -7,7 +7,7 @@ import (
 
 func AC_03() (string, raidengine.StrikeResult) {
 	result := raidengine.StrikeResult{
-		Description: "The project’s version control system MUST prevent unintentional direct commits against the primary branch.",
+		Description: "The project's version control system MUST prevent unintentional direct commits against the primary branch.",
 		ControlID:   "OSPS-AC-03",
 		Movements:   make(map[string]raidengine.MovementResult),
 	}
@@ -17,12 +17,23 @@ func AC_03() (string, raidengine.StrikeResult) {
 	return "AC_03", result
 }
 
-func AC_03_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
-		Description: "This movement is still under construction",
-		Function:    utils.CallerPath(0),
+func AC_03_T01() (moveResult raidengine.MovementResult) {
+	protectionData := GetData().Repository.DefaultBranchRef.BranchProtectionRule
+  // TODO: check rulesets also
+
+	var message string
+	if protectionData.RestrictsPushes {
+		message = "Branch protection rule restricts pushes"
+	} else if protectionData.RequiresApprovingReviews {
+		message = "Branch protection rule requires approving reviews"
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to AC_01
+  moveResult := raidengine.MovementResult{
+		Description: "Inspect default branch for a protection rule that restricts pushes",
+		Function:    utils.CallerPath(0),
+		Passed:      protectionData.RestrictsPushes || protectionData.RequiresApprovingReviews,
+		Message:     message,
+	}
+
 	return moveResult
 }
