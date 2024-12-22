@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -19,11 +21,17 @@ func LE_01() (string, raidengine.StrikeResult) {
 
 // TODO
 func LE_01_T01() raidengine.MovementResult {
+	orgRequired := Data.GraphQL().Organization.WebCommitSignoffRequired
+	repoRequired := Data.GraphQL().Repository.WebCommitSignoffRequired
+
+	required := orgRequired || repoRequired
+
 	moveResult := raidengine.MovementResult{
-		Description: "This movement is still under construction",
+		Description: "Inspect Org & Repo Policy to Enforce Web SignOff",
 		Function:    utils.CallerPath(0),
+		Passed:      required,
+		Message:     fmt.Sprintf("Web SignOff Enabled: %v", required),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to LE_01
 	return moveResult
 }
