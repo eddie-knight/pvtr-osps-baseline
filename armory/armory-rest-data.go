@@ -5,12 +5,15 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+
+	"gopkg.in/yaml.v3"
 )
 
 type RestData struct {
-	owner string
-	repo  string
-	Repo  RepoData
+	owner    string
+	repo     string
+	Repo     RepoData
+	Insights SecurityInsights
 }
 
 type RepoData struct {
@@ -23,6 +26,18 @@ type ReleaseData struct {
 	Id      int    `json:"id"`
 	Name    string `json:"name"`
 	TagName string `json:"tag_name"`
+}
+
+type SecurityInsights struct {
+	ByteContent []byte   `json:"content"`
+	SHA         string   `json:"sha"`
+	Header      SIHeader `yaml:"header"`
+}
+
+type SIHeader struct {
+	SchemaVersion string `yaml:"schema-version"`
+	ChangeLogURL  string `yaml:"changelog"`
+	LicenseURL    string `yaml:"license"`
 }
 
 func makeGetRequest(endpoint string, authRequired bool) (body []byte, err error) {
@@ -57,6 +72,30 @@ func (r *RestData) loadData() error {
 			r.Repo.getReleases(r.owner, r.repo)
 		}
 	}
+	if r.Insights.SHA == "" {
+		r.Insights.getData(r.owner, r.repo)
+	}
+	return nil
+}
+
+func (s *SecurityInsights) getData(owner, repo string) error {
+	insightsURL := fmt.Sprintf("repos/%s/%s/contents/SECURITY-INSIGHTS.yml", owner, repo)
+	response, err := makeGetRequest(insightsURL, false)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(response, s)
+	if err != nil {
+		return err
+	}
+
+	err = yaml.Unmarshal(s.ByteContent, s)
+	if err != nil {
+		return err
+	}
+
+	GlobalConfig.Logger.Trace(fmt.Sprintf("Security Insights SHA: %v", s.SHA))
+
 	return nil
 }
 
