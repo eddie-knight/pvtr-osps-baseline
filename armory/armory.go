@@ -30,7 +30,9 @@ var (
 				QA_01,
 				BR_02,
 				AC_03,
-			},
+				LE_01,
+				LE_02,
+				LE_04},
 			"maturity_1": {
 				AC_01,
 				AC_02,
