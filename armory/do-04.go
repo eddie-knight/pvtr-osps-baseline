@@ -3,26 +3,26 @@ package armory
 import (
 	"fmt"
 
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_04() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func DO_04() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project documentation MUST include a policy for coordinated vulnerability reporting, with a clear timeframe for response.",
 		ControlID:   "OSPS-DO-04",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(DO_04_T01)
+	result.ExecuteTest(DO_04_T01)
 
 	return "DO_04", result
 }
 
-func DO_04_T01() raidengine.MovementResult {
+func DO_04_T01() pluginkit.TestResult {
 	enabled := Data.GraphQL().Repository.IsSecurityPolicyEnabled
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Discover whether a security policy is enabled for this repo.",
 		Function:    utils.CallerPath(0),
 		Passed:      enabled,

@@ -3,7 +3,7 @@ package armory
 import (
 	"github.com/hashicorp/go-hclog"
 	"github.com/privateerproj/privateer-sdk/config"
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 )
 
 type ArmoryData struct {
@@ -16,8 +16,8 @@ var (
 	GlobalConfig  *config.Config
 	Logger        hclog.Logger
 	Data          ArmoryData
-	Armory        = raidengine.Armory{
-		Tactics: map[string][]raidengine.Strike{
+	Armory        = pluginkit.Armory{
+		TestSuites: map[string][]pluginkit.TestSet{
 			"dev": {
 				DO_01,
 				DO_02,
@@ -79,14 +79,14 @@ func SetupArmory(c *config.Config) {
 	GlobalConfig = c
 	Logger = c.Logger
 	if c.GetString("token") == "" {
-		Armory.Tactics = unauthenticatedTactics()
+		Armory.TestSuites = unauthenticatedTestSuites()
 	} else {
 		Authenticated = true
 	}
 }
 
-func unauthenticatedTactics() map[string][]raidengine.Strike {
-	return map[string][]raidengine.Strike{
+func unauthenticatedTestSuites() map[string][]pluginkit.TestSet {
+	return map[string][]pluginkit.TestSet{
 		"dev": {
 			QA_01,
 			BR_02,

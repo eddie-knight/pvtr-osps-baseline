@@ -1,24 +1,24 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_03() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func DO_03() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project documentation MUST provide user guides for all basic functionality.",
 		ControlID:   "OSPS-DO-03",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(DO_03_T01)
+	result.ExecuteTest(DO_03_T01)
 
 	return "DO_03", result
 }
 
-func DO_03_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func DO_03_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

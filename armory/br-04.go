@@ -1,24 +1,24 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func BR_04() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func BR_04() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "All released software assets MUST be created with consistent, automated build and release pipelines.",
 		ControlID:   "OSPS-BR-04",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(BR_04_T01)
+	result.ExecuteTest(BR_04_T01)
 
 	return "BR_04", result
 }
 
-func BR_04_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func BR_04_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

@@ -4,28 +4,28 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func BR_02() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func BR_02() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "All releases and released software assets MUST be assigned a unique version identifier for each release intended to be used by users.",
 		ControlID:   "OSPS-BR-02",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(BR_02_T01)
-	if !strings.Contains(result.Movements["BR_02_T01"].Message, ": 0") {
-		result.ExecuteMovement(BR_02_T02)
+	result.ExecuteTest(BR_02_T01)
+	if !strings.Contains(result.Tests["BR_02_T01"].Message, ": 0") {
+		result.ExecuteTest(BR_02_T02)
 	}
 	return "BR_02", result
 }
 
-func BR_02_T01() raidengine.MovementResult {
+func BR_02_T01() pluginkit.TestResult {
 	releases := Data.Rest().Repo.Releases
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Discover all releases on the repository",
 		Function:    utils.CallerPath(0),
 		Passed:      true,
@@ -37,7 +37,7 @@ func BR_02_T01() raidengine.MovementResult {
 	return moveResult
 }
 
-func BR_02_T02() raidengine.MovementResult {
+func BR_02_T02() pluginkit.TestResult {
 	releases := Data.Rest().Repo.Releases
 
 	releaseNames := make(map[string]int)
@@ -55,7 +55,7 @@ func BR_02_T02() raidengine.MovementResult {
 		}
 	}
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Ensure all releases have a unique name",
 		Function:    utils.CallerPath(0),
 		Passed:      errorCount == 0,

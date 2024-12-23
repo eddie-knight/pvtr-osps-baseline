@@ -4,25 +4,25 @@ import (
 	"github.com/eddie-knight/raid-osps-baseline/armory"
 
 	"github.com/privateerproj/privateer-sdk/config"
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 )
 
 var (
-	Vessel = raidengine.Vessel{
-		RaidName:    "osps-baseline",
+	Vessel = pluginkit.Vessel{
+		PluginName:  "osps-baseline",
 		Armory:      &armory.Armory,
 		Initializer: initializer,
 		RequiredVars: []string{
 			"owner",
 			"repo",
 		},
-	} // Used by the plugin or debug function to run the Raid
+	} // Used by the plugin or debug function to run the Plugin
 )
 
-type Raid struct{}
+type Plugin struct{}
 
-// Raid.Start() is called by plugin.Serve
-func (r *Raid) Start() (err error) {
+// Plugin.Start() is called by plugin.Serve
+func (p *Plugin) Start() (err error) {
 	err = Vessel.Mobilize()
 	return
 }

@@ -1,23 +1,23 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func AC_03() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func AC_03() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project's version control system MUST prevent unintentional direct commits against the primary branch.",
 		ControlID:   "OSPS-AC-03",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(AC_03_T01)
+	result.ExecuteTest(AC_03_T01)
 
 	return "AC_03", result
 }
 
-func AC_03_T01() raidengine.MovementResult {
+func AC_03_T01() pluginkit.TestResult {
 	protectionData := Data.GraphQL().Repository.DefaultBranchRef.BranchProtectionRule
 	// TODO: check rulesets also
 
@@ -28,7 +28,7 @@ func AC_03_T01() raidengine.MovementResult {
 		message = "Branch protection rule requires approving reviews"
 	}
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Inspect default branch for a protection rule that restricts pushes",
 		Function:    utils.CallerPath(0),
 		Passed:      protectionData.RestrictsPushes || protectionData.RequiresApprovingReviews,

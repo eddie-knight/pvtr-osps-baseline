@@ -1,24 +1,24 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func AC_06() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func AC_06() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project’s version control system MUST require multi-factor authentication that does not include SMS for users when modifying the project repository settings or accessing sensitive data.",
 		ControlID:   "OSPS-AC-06",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(AC_06_T01)
+	result.ExecuteTest(AC_06_T01)
 
 	return "AC_06", result
 }
 
-func AC_06_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func AC_06_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

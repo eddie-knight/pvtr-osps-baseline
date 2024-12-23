@@ -1,25 +1,25 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func LE_03() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func LE_03() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The license for the source code MUST be maintained in a standard location within the project’s repository.",
 		ControlID:   "OSPS-LE-03",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(LE_03_T01)
+	result.ExecuteTest(LE_03_T01)
 
 	return "LE_03", result
 }
 
 // TODO
-func LE_03_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func LE_03_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

@@ -20,6 +20,7 @@ go-package: go-tidy go-test
 go-test:
 	@echo "  >  Validating code ..."
 	@go vet ./...
+	@go clean -testcache
 	@go test ./...
 
 go-tidy:

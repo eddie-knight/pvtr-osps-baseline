@@ -1,25 +1,25 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func LE_01() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func LE_01() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The version control system MUST require all code contributors to assert that they are legally authorized to commit the associated contributions on every commit.",
 		ControlID:   "OSPS-LE-01",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(LE_01_T01)
+	result.ExecuteTest(LE_01_T01)
 
 	return "LE_01", result
 }
 
 // TODO
-func LE_01_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func LE_01_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

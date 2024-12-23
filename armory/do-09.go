@@ -1,25 +1,25 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_09() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func DO_09() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project documentation MUST include descriptions of all external input and output interfaces of the released software assets.",
 		ControlID:   "OSPS-DO-09",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(DO_09_T01)
+	result.ExecuteTest(DO_09_T01)
 
 	return "DO_09", result
 }
 
 // TODO
-func DO_09_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func DO_09_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

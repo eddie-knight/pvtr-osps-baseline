@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/privateerproj/privateer-sdk/command"
-	"github.com/privateerproj/privateer-sdk/plugin"
+	"github.com/privateerproj/privateer-sdk/shared"
 )
 
 var (
@@ -16,23 +16,23 @@ var (
 	buildGitCommitHash string
 	buildTime          string
 
-	RaidName = "osps-baseline"
+	PluginName = "osps-baseline"
 
 	// runCmd represents the base command when called without any subcommands
 	runCmd = &cobra.Command{
-		Use:   RaidName,
-		Short: fmt.Sprintf("Test suite for %s.", RaidName),
+		Use:   PluginName,
+		Short: fmt.Sprintf("Test suite for %s.", PluginName),
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
 			// optional
 		},
 		Run: func(cmd *cobra.Command, args []string) {
 			// Serve plugin
-			raid := &Raid{}
-			serveOpts := &plugin.ServeOpts{
-				Plugin: raid,
+			plugin := &Plugin{}
+			serveOpts := &shared.ServeOpts{
+				Plugin: plugin,
 			}
 
-			plugin.Serve(RaidName, serveOpts)
+			shared.Serve(PluginName, serveOpts)
 		},
 	}
 )

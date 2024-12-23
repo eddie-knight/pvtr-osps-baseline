@@ -1,4 +1,4 @@
-# Privateer Raid osps-baseline
+# Privateer Plugin osps-baseline
 
 This wireframe is designed to quickly get your service pack repository up to speed!
 

@@ -1,24 +1,24 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func QA_06() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func QA_06() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The version control system MUST NOT contain generated executable artifacts.",
 		ControlID:   "OSPS-QA-06",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(QA_06_T01)
+	result.ExecuteTest(QA_06_T01)
 
 	return "QA_06", result
 }
 
-func QA_06_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func QA_06_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

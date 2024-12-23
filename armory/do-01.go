@@ -1,24 +1,24 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_01() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func DO_01() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project MUST have one or more mechanisms for public discussions about proposed changes and usage obstacles.",
 		ControlID:   "OSPS-DO-01",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(DO_01_T01)
+	result.ExecuteTest(DO_01_T01)
 
 	return "DO_01", result
 }
 
 // TODO
-func DO_01_T01() raidengine.MovementResult {
+func DO_01_T01() pluginkit.TestResult {
 	repoData := Data.GraphQL().Repository
 
 	var message string
@@ -29,7 +29,7 @@ func DO_01_T01() raidengine.MovementResult {
 		message = message + "Issues are enabled."
 	}
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Discover whether issues or discussions are enabled on the repo.",
 		Function:    utils.CallerPath(0),
 		Message:     message,

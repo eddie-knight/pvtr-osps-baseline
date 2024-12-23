@@ -1,25 +1,25 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_08() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func DO_08() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project documentation MUST include a policy that defines a threshold for remediation of SCA findings related to vulnerabilities and licenses.",
 		ControlID:   "OSPS-DO-08",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(DO_08_T01)
+	result.ExecuteTest(DO_08_T01)
 
 	return "DO_08", result
 }
 
 // TODO
-func DO_08_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func DO_08_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

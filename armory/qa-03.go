@@ -1,25 +1,25 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func QA_03() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func QA_03() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "All released software assets MUST be delivered with a machine-readable list of all direct and transitive internal software dependencies with their associated version identifiers.",
 		ControlID:   "OSPS-QA-03",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(QA_03_T01)
+	result.ExecuteTest(QA_03_T01)
 
 	return "QA_03", result
 }
 
 // TODO
-func QA_03_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func QA_03_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}

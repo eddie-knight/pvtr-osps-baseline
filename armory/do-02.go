@@ -3,28 +3,28 @@ package armory
 import (
 	"fmt"
 
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func DO_02() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func DO_02() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "The project documentation MUST include an explanation of the contribution process.",
 		ControlID:   "OSPS-DO-02",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(DO_02_T01)
+	result.ExecuteTest(DO_02_T01)
 
 	return "DO_02", result
 }
 
-func DO_02_T01() raidengine.MovementResult {
+func DO_02_T01() pluginkit.TestResult {
 
 	body := Data.GraphQL().Repository.ContributingGuidelines.Body
 	containsGuidelines := len(body) > 100
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Discover whether the GitHub repo's recommended contributing guidelines has content.",
 		Function:    utils.CallerPath(0),
 		Passed:      containsGuidelines,

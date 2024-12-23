@@ -3,18 +3,19 @@ module github.com/eddie-knight/raid-osps-baseline // Replace this globally with 
 go 1.23
 
 require (
-	github.com/privateerproj/privateer-sdk v0.0.16
+	github.com/hashicorp/go-hclog v1.6.3
+	github.com/privateerproj/privateer-sdk v0.0.17
 	github.com/shurcooL/githubv4 v0.0.0-20240727222349-48295856cce7
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
 	golang.org/x/oauth2 v0.18.0
+	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
 	github.com/fatih/color v1.14.1 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/hashicorp/go-hclog v1.6.3 // indirect
 	github.com/hashicorp/go-plugin v1.6.2 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
@@ -44,8 +45,7 @@ require (
 	google.golang.org/grpc v1.62.1 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 // Uncomment if you're working locally on a privateer SDK improvement
-replace github.com/privateerproj/privateer-sdk => ../privateer-sdk
+// replace github.com/privateerproj/privateer-sdk => ../privateer-sdk

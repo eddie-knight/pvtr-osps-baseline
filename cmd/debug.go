@@ -10,7 +10,7 @@ var (
 	// debugCmd represents the base command when called without any subcommands
 	debugCmd = &cobra.Command{
 		Use:   "debug",
-		Short: "Run the Raid in debug mode",
+		Short: "Run the Plugin in debug mode",
 		Run: func(cmd *cobra.Command, args []string) {
 			err := Vessel.Mobilize()
 			if err != nil {
@@ -21,5 +21,5 @@ var (
 )
 
 func init() {
-	runCmd.AddCommand(debugCmd) // This enables the debug command for use while working on your Raid
+	runCmd.AddCommand(debugCmd) // This enables the debug command for use while working on your Plugin
 }

@@ -4,29 +4,29 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func BR_06() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func BR_06() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "All releases MUST provide a descriptive log of functional and security modifications.",
 		ControlID:   "OSPS-BR-06",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(BR_06_T01)
-	if !strings.Contains(result.Movements["BR_06_T01"].Message, ": 0") {
+	result.ExecuteTest(BR_06_T01)
+	if !strings.Contains(result.Tests["BR_06_T01"].Message, ": 0") {
 		Logger.Trace("Releases Found, checking for Change Log")
-		result.ExecuteMovement(BR_06_T02)
+		result.ExecuteTest(BR_06_T02)
 	}
 	return "BR_06", result
 }
 
-func BR_06_T01() raidengine.MovementResult {
+func BR_06_T01() pluginkit.TestResult {
 	releaseCount := Data.GraphQL().Repository.Releases.TotalCount
 
-	return raidengine.MovementResult{
+	return pluginkit.TestResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
 		Passed:      true,
@@ -34,11 +34,11 @@ func BR_06_T01() raidengine.MovementResult {
 	}
 }
 
-func BR_06_T02() raidengine.MovementResult {
+func BR_06_T02() pluginkit.TestResult {
 	releaseDescription := Data.GraphQL().Repository.LatestRelease.Description
 	contains := (strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog"))
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
 		Passed:      contains,

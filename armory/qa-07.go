@@ -1,25 +1,25 @@
 package armory
 
 import (
-	"github.com/privateerproj/privateer-sdk/raidengine"
+	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-func QA_07() (string, raidengine.StrikeResult) {
-	result := raidengine.StrikeResult{
+func QA_07() (string, pluginkit.TestSetResult) {
+	result := pluginkit.TestSetResult{
 		Description: "All proposed changes to the project’s codebase must be automatically evaluated against a documented policy for known vulnerabilities and blocked in the event of violations except when declared and supressed as non exploitable.",
 		ControlID:   "OSPS-QA-07",
-		Movements:   make(map[string]raidengine.MovementResult),
+		Tests:       make(map[string]pluginkit.TestResult),
 	}
 
-	result.ExecuteMovement(QA_07_T01)
+	result.ExecuteTest(QA_07_T01)
 
 	return "QA_07", result
 }
 
 // TODO
-func QA_07_T01() raidengine.MovementResult {
-	moveResult := raidengine.MovementResult{
+func QA_07_T01() pluginkit.TestResult {
+	moveResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
