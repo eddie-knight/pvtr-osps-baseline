@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/eddie-knight/raid-osps-baseline/armory"
+	"github.com/eddie-knight/privateer-osps-baseline/armory"
 
 	"github.com/privateerproj/privateer-sdk/config"
 	"github.com/privateerproj/privateer-sdk/pluginkit"
