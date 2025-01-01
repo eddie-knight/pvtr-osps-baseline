@@ -6,8 +6,6 @@ import (
 	"io"
 	"net/http"
 	"strings"
-
-	"gopkg.in/yaml.v3"
 )
 
 type RestData struct {
@@ -98,7 +96,7 @@ func (r *RestData) loadData() error {
 }
 
 func (r *RestData) loadSecurityInsights() {
-	r.getTopContents()
+	r.getTopDirContents()
 	if len(r.Repo.Contents.TopLevel) == 0 {
 		Logger.Error("no contents retrieved from the top level of the repository")
 		return
@@ -109,7 +107,7 @@ func (r *RestData) loadSecurityInsights() {
 			return
 		}
 	}
-	r.getForgeContents()
+	r.getForgeDirContents()
 	for _, content := range r.Repo.Contents.ForgeDir {
 		if r.foundSecurityInsights(content) {
 			r.Insights.Ingest()
@@ -126,18 +124,14 @@ func (r *RestData) foundSecurityInsights(content DirContents) bool {
 			Logger.Error(fmt.Sprintf("error unmarshalling API response for security insights file: %s", err.Error()))
 			return false
 		}
-		Logger.Trace(fmt.Sprintf("Security Insights SHA: [%v]", response.SHA))
 		r.Insights.rawData = response.ByteContent
-		err = yaml.Unmarshal(response.ByteContent, &r.Insights)
-		if err != nil {
-			Logger.Error(fmt.Sprintf("error unmarshalling security insights byte data into struct: %s", err.Error()))
-		}
+		Logger.Trace(fmt.Sprintf("Security Insights SHA: [%v]", response.SHA))
 		return true
 	}
 	return false
 }
 
-func (r *RestData) getTopContents() {
+func (r *RestData) getTopDirContents() {
 	endpoint := fmt.Sprintf("repos/%s/%s/contents", r.owner, r.repo)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {
@@ -147,7 +141,7 @@ func (r *RestData) getTopContents() {
 	json.Unmarshal(responseData, &r.Repo.Contents.TopLevel)
 }
 
-func (r *RestData) getForgeContents() {
+func (r *RestData) getForgeDirContents() {
 	endpoint := fmt.Sprintf("repos/%s/%s/contents/.github", r.owner, r.repo)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {

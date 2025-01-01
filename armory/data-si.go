@@ -1,8 +1,11 @@
 package armory
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
+
+	"gopkg.in/yaml.v3"
 )
 
 type SecurityInsights struct {
@@ -152,6 +155,12 @@ type SIHeader struct {
 }
 
 func (s *SecurityInsights) Ingest() {
+	err := yaml.Unmarshal(s.rawData, s)
+	if err != nil {
+		Logger.Error(fmt.Sprintf("error unmarshalling security insights byte data into struct: %s", err.Error()))
+		return
+	}
+
 	// TODO: this whole function needs revised when the released v2 schema is available
 	// var schema SecurityInsights
 	// 	major, minor, patch := ParseVersion(s.Header.SchemaVersion)
