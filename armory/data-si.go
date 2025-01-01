@@ -155,7 +155,7 @@ type SIHeader struct {
 }
 
 func (s *SecurityInsights) Ingest() {
-	// TODO: this whole function needs revised when the released v2 schema is available
+	// TODO: support multiple schema versions
 	major, minor, patch := ParseVersion(s.Header.SchemaVersion)
 	if major != 2 {
 		Logger.Error(fmt.Sprintf("the requested Security Insights schema version is not currently supported: \n%s", s.Header.SchemaVersion))
