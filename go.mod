@@ -1,18 +1,15 @@
-module github.com/eddie-knight/privateer-osps-baseline // Replace this globally with your module name
+module github.com/eddie-knight/privateer-osps-baseline
 
 go 1.23
 
-// Uncomment if you're working locally on a privateer SDK improvement
-// replace github.com/privateerproj/privateer-sdk => ../privateer-sdk
-
 require (
 	github.com/hashicorp/go-hclog v1.6.3
+	github.com/ossf/si-tooling/v2 v2.0.2
 	github.com/privateerproj/privateer-sdk v0.0.17
 	github.com/shurcooL/githubv4 v0.0.0-20240727222349-48295856cce7
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
 	golang.org/x/oauth2 v0.24.0
-	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
@@ -47,4 +44,8 @@ require (
 	google.golang.org/grpc v1.62.1 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+// Uncomment if you're working locally on a privateer SDK improvement
+// replace github.com/privateerproj/privateer-sdk => ../privateer-sdk

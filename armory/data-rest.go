@@ -6,13 +6,15 @@ import (
 	"io"
 	"net/http"
 	"strings"
+
+	"github.com/ossf/si-tooling/v2/si"
 )
 
 type RestData struct {
 	owner    string
 	repo     string
 	Repo     RepoData
-	Insights SecurityInsights
+	Insights si.SecurityInsights
 }
 
 type RepoData struct {
@@ -103,14 +105,22 @@ func (r *RestData) loadSecurityInsights() {
 	}
 	for _, content := range r.Repo.Contents.TopLevel {
 		if r.foundSecurityInsights(content) {
-			r.Insights.Ingest()
+			insights, err := si.Read(r.owner, r.repo, "security-insights.yml")
+			r.Insights = insights
+			if err != nil {
+				Logger.Error(fmt.Sprintf("error reading security insights file: %s", err.Error()))
+			}
 			return
 		}
 	}
 	r.getForgeDirContents()
 	for _, content := range r.Repo.Contents.ForgeDir {
 		if r.foundSecurityInsights(content) {
-			r.Insights.Ingest()
+			insights, err := si.Read(r.owner, r.repo, ".github/security-insights.yml")
+			r.Insights = insights
+			if err != nil {
+				Logger.Error(fmt.Sprintf("error reading security insights file: %s", err.Error()))
+			}
 			return
 		}
 	}
@@ -124,7 +134,6 @@ func (r *RestData) foundSecurityInsights(content DirContents) bool {
 			Logger.Error(fmt.Sprintf("error unmarshalling API response for security insights file: %s", err.Error()))
 			return false
 		}
-		r.Insights.rawData = response.ByteContent
 		Logger.Trace(fmt.Sprintf("Security Insights SHA: [%v]", response.SHA))
 		return true
 	}

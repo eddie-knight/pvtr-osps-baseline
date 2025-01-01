@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -13,16 +15,23 @@ func DO_03() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(DO_03_T01)
-
+	if !result.Tests["DO_03_T01"].Passed {
+		// TODO: call the location and check for contents
+	}
 	return "DO_03", result
 }
 
 func DO_03_T01() pluginkit.TestResult {
+	guideLocation := Data.Rest().Insights.Project.Documentation.DetailedGuide
+	found := guideLocation != ""
+
 	moveResult := pluginkit.TestResult{
-		Description: "This movement is still under construction",
+		Description: "Determine whether the project's Security Insights data specifies a documentation location.",
 		Function:    utils.CallerPath(0),
+		Passed:      found,
+		Message:     fmt.Sprintf("Detailed Guide documentation location specified in Security Insights: %t", found),
+		Value:       guideLocation,
 	}
 
-	// TODO: This needs security insights data
 	return moveResult
 }
