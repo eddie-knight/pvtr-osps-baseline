@@ -155,24 +155,20 @@ type SIHeader struct {
 }
 
 func (s *SecurityInsights) Ingest() {
+	// TODO: this whole function needs revised when the released v2 schema is available
+	major, minor, patch := ParseVersion(s.Header.SchemaVersion)
+	if major != 2 {
+		Logger.Error(fmt.Sprintf("the requested Security Insights schema version is not currently supported: \n%s", s.Header.SchemaVersion))
+		return
+	}
+	if minor != 0 || patch != 0 {
+		Logger.Warn("the provided Security Insights schema version may not be supported: '%s' (known supported is v2.0.0)", s.Header.SchemaVersion)
+	}
 	err := yaml.Unmarshal(s.rawData, s)
 	if err != nil {
 		Logger.Error(fmt.Sprintf("error unmarshalling security insights byte data into struct: %s", err.Error()))
 		return
 	}
-
-	// TODO: this whole function needs revised when the released v2 schema is available
-	// var schema SecurityInsights
-	// 	major, minor, patch := ParseVersion(s.Header.SchemaVersion)
-	// 	if major != 2 {
-	// 		Logger.Error(fmt.Sprintf("the requested Security Insights schema version is not currently supported: \n%s", s))
-	// 		return
-	// 	}
-	// 	if minor != 0 || patch != 0 {
-	// 		Logger.Warn("the provided Security Insights schema version may not be supported: '%s' (known supported is v2.0.0)", s.Header.SchemaVersion)
-	// 	}
-	// 	// TODO: add logic to handle version numbers
-	// }
 }
 
 func ParseVersion(version string) (int, int, int) {
