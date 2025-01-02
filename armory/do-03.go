@@ -15,8 +15,8 @@ func DO_03() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(DO_03_T01)
-	if !result.Tests["DO_03_T01"].Passed {
-		// TODO: call the location and check for contents
+	if result.Tests["DO_03_T01"].Passed {
+		result.ExecuteTest(DO_03_T02)
 	}
 	return "DO_03", result
 }
@@ -26,11 +26,28 @@ func DO_03_T01() pluginkit.TestResult {
 	found := guideLocation != ""
 
 	moveResult := pluginkit.TestResult{
-		Description: "Determine whether the project's Security Insights data specifies a documentation location.",
+		Description: "Determine whether the project's Security Insights data specifies a detailed-guide location.",
 		Function:    utils.CallerPath(0),
 		Passed:      found,
-		Message:     fmt.Sprintf("Detailed Guide documentation location specified in Security Insights: %t", found),
+		Message:     fmt.Sprintf("Detailed Guide docs location specified in Security Insights: %t", found),
 		Value:       guideLocation,
+	}
+
+	return moveResult
+}
+
+func DO_03_T02() pluginkit.TestResult {
+	_, err := makeApiCall(Data.Rest().Insights.Project.Documentation.DetailedGuide, false)
+
+	moveResult := pluginkit.TestResult{
+		Description: "Verifying that an artifact exists at the location specified for the detailed-guide.",
+		Function:    utils.CallerPath(0),
+		Passed:      err == nil,
+		Message:     fmt.Sprintf("URL for Detailed Guide can be reached: %t", err == nil),
+	}
+
+	if err != nil {
+		moveResult.Value = err
 	}
 
 	return moveResult

@@ -50,9 +50,11 @@ type FileAPIResponse struct {
 	SHA         string `json:"sha"`
 }
 
+var APIBase = "https://api.github.com/repos"
+
 func makeApiCall(endpoint string, authRequired bool) (body []byte, err error) {
 	Logger.Trace(fmt.Sprintf("GET %s", endpoint))
-	request, err := http.NewRequest("GET", "https://api.github.com/"+endpoint, nil)
+	request, err := http.NewRequest("GET", endpoint, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -76,7 +78,7 @@ func makeApiCall(endpoint string, authRequired bool) (body []byte, err error) {
 }
 
 func getSourceFile(owner, repo, path string) (response FileAPIResponse, err error) {
-	endpoint := fmt.Sprintf("repos/%s/%s/contents/%s", owner, repo, path)
+	endpoint := fmt.Sprintf("%s/%s/%s/contents/%s", APIBase, owner, repo, path)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {
 		return
@@ -134,14 +136,14 @@ func (r *RestData) foundSecurityInsights(content DirContents) bool {
 			Logger.Error(fmt.Sprintf("error unmarshalling API response for security insights file: %s", err.Error()))
 			return false
 		}
-		Logger.Trace(fmt.Sprintf("Security Insights SHA: [%v]", response.SHA))
+		Logger.Trace(fmt.Sprintf("Security Insights Exists - SHA: %v", response.SHA))
 		return true
 	}
 	return false
 }
 
 func (r *RestData) getTopDirContents() {
-	endpoint := fmt.Sprintf("repos/%s/%s/contents", r.owner, r.repo)
+	endpoint := fmt.Sprintf("%s/%s/%s/contents", APIBase, r.owner, r.repo)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {
 		Logger.Error(fmt.Sprintf("error getting top level contents: %s", err.Error()))
@@ -151,7 +153,7 @@ func (r *RestData) getTopDirContents() {
 }
 
 func (r *RestData) getForgeDirContents() {
-	endpoint := fmt.Sprintf("repos/%s/%s/contents/.github", r.owner, r.repo)
+	endpoint := fmt.Sprintf("%s/%s/%s/contents/.github", APIBase, r.owner, r.repo)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {
 		Logger.Error(fmt.Sprintf("error getting forge contents: %s", err.Error()))
@@ -161,7 +163,7 @@ func (r *RestData) getForgeDirContents() {
 }
 
 func (r *RestData) getMetadata() error {
-	endpoint := fmt.Sprintf("repos/%s/%s", r.owner, r.repo)
+	endpoint := fmt.Sprintf("%s/%s/%s", APIBase, r.owner, r.repo)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {
 		return err
@@ -170,7 +172,7 @@ func (r *RestData) getMetadata() error {
 }
 
 func (r *RepoData) getReleases(owner, repo string) error {
-	endpoint := fmt.Sprintf("repos/%s/%s/releases", owner, repo)
+	endpoint := fmt.Sprintf("%s/%s/%s/releases", APIBase, owner, repo)
 	responseData, err := makeApiCall(endpoint, false)
 	if err != nil {
 		return err

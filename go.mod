@@ -4,7 +4,7 @@ go 1.23
 
 require (
 	github.com/hashicorp/go-hclog v1.6.3
-	github.com/ossf/si-tooling/v2 v2.0.2
+	github.com/ossf/si-tooling/v2 v2.0.3
 	github.com/privateerproj/privateer-sdk v0.0.17
 	github.com/shurcooL/githubv4 v0.0.0-20240727222349-48295856cce7
 	github.com/spf13/cobra v1.8.1
@@ -49,3 +49,5 @@ require (
 
 // Uncomment if you're working locally on a privateer SDK improvement
 // replace github.com/privateerproj/privateer-sdk => ../privateer-sdk
+
+// replace github.com/ossf/si-tooling/v2 => ../../openssf/si-tooling/v2
