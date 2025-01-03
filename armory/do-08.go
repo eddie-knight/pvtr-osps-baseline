@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -13,17 +15,41 @@ func DO_08() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(DO_08_T01)
+	if result.Tests["DO_08_T01"].Passed {
+		result.ExecuteTest(DO_08_T02)
+	}
 
 	return "DO_08", result
 }
 
-// TODO
 func DO_08_T01() pluginkit.TestResult {
+	policyLocation := Data.Rest().Insights.Repository.Documentation.DependencyManagement
+	found := policyLocation != ""
+
 	testResult := pluginkit.TestResult{
-		Description: "This movement is still under construction",
+		Description: "Determine whether the project's Security Insights data specifies a dependency-management policy location.",
 		Function:    utils.CallerPath(0),
+		Passed:      found,
+		Message:     fmt.Sprintf("Dependency Management Policy docs location specified in Security Insights: %t", found),
+		Value:       policyLocation,
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to DO_08
+	return testResult
+}
+
+func DO_08_T02() pluginkit.TestResult {
+	_, err := makeApiCall(Data.Rest().Insights.Repository.Documentation.DependencyManagement, false)
+
+	testResult := pluginkit.TestResult{
+		Description: "Verifying that an artifact exists at the location specified for the dependency-management policy.",
+		Function:    utils.CallerPath(0),
+		Passed:      err == nil,
+		Message:     "URL for Dependency Management Policy can be reached",
+	}
+
+	if err != nil {
+		testResult.Value = err
+	}
+
 	return testResult
 }
