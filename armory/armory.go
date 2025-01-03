@@ -21,14 +21,15 @@ var (
 			"dev": {
 				DO_01,
 				DO_02,
+				DO_03,
 				DO_04,
 				DO_05,
+				DO_06,
 				BR_06,
 				AC_01,
 				QA_01,
 				BR_02,
 				AC_03,
-				DO_03,
 			},
 			"maturity_1": {
 				AC_01,

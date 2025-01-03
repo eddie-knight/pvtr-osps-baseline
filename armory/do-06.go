@@ -1,6 +1,8 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -17,11 +19,15 @@ func DO_06() (string, pluginkit.TestSetResult) {
 }
 
 func DO_06_T01() pluginkit.TestResult {
+	guideLocation := Data.Rest().Insights.Repository.Documentation.Contributing
+	found := guideLocation != ""
 	moveResult := pluginkit.TestResult{
-		Description: "This movement is still under construction",
+		Description: "Ensure the project's Security Insights data specifies a contributing guide location.",
 		Function:    utils.CallerPath(0),
+		Passed:      found,
+		Message:     fmt.Sprintf("Contributing guide location specified in Security Insights: %v", found),
+		Value:       guideLocation,
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to DO_06
 	return moveResult
 }
