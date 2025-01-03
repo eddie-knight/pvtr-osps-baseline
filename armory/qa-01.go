@@ -23,17 +23,17 @@ func QA_01_T01() pluginkit.TestResult {
 	gotRepoData := Data.Rest().Repo.Name != ""
 	isPrivate := Data.Rest().Repo.Private
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Verifying that the GitHub repository is public at the target URL.",
 		Function:    utils.CallerPath(0),
 		Passed:      gotRepoData && !isPrivate,
 	}
 
 	if !gotRepoData {
-		moveResult.Message = "Repository data not found"
+		testResult.Message = "Repository data not found"
 	} else {
-		moveResult.Message = fmt.Sprintf("Public Repo: %t", !isPrivate)
+		testResult.Message = fmt.Sprintf("Public Repo: %t", !isPrivate)
 	}
 
-	return moveResult
+	return testResult
 }

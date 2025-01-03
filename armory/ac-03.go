@@ -28,12 +28,12 @@ func AC_03_T01() pluginkit.TestResult {
 		message = "Branch protection rule requires approving reviews"
 	}
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Inspect default branch for a protection rule that restricts pushes",
 		Function:    utils.CallerPath(0),
 		Passed:      protectionData.RestrictsPushes || protectionData.RequiresApprovingReviews,
 		Message:     message,
 	}
 
-	return moveResult
+	return testResult
 }

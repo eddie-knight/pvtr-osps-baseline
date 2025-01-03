@@ -38,11 +38,11 @@ func BR_06_T02() pluginkit.TestResult {
 	releaseDescription := Data.GraphQL().Repository.LatestRelease.Description
 	contains := (strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog"))
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
 		Passed:      contains,
 		Message:     fmt.Sprintf("Change Log Found in Latest Release: %v", contains),
 	}
-	return moveResult
+	return testResult
 }

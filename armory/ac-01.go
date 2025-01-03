@@ -23,12 +23,12 @@ func AC_01() (string, pluginkit.TestSetResult) {
 func AC_01_T01() pluginkit.TestResult {
 	required := Data.GraphQL().Organization.RequiresTwoFactorAuthentication
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Inspect the repo's parent to ensure that all members are required to use MFA",
 		Function:    utils.CallerPath(0),
 		Passed:      required,
 		Message:     fmt.Sprintf("MFA Required: %v", required),
 	}
 
-	return moveResult
+	return testResult
 }

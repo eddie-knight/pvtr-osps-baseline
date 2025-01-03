@@ -19,11 +19,11 @@ func LE_02() (string, pluginkit.TestSetResult) {
 
 // TODO
 func LE_02_T01() pluginkit.TestResult {
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to LE_02
-	return moveResult
+	return testResult
 }

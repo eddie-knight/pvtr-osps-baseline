@@ -25,7 +25,7 @@ func BR_02() (string, pluginkit.TestSetResult) {
 func BR_02_T01() pluginkit.TestResult {
 	releases := Data.Rest().Repo.Releases
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Discover all releases on the repository",
 		Function:    utils.CallerPath(0),
 		Passed:      true,
@@ -34,7 +34,7 @@ func BR_02_T01() pluginkit.TestResult {
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to BR_01
-	return moveResult
+	return testResult
 }
 
 func BR_02_T02() pluginkit.TestResult {
@@ -55,12 +55,12 @@ func BR_02_T02() pluginkit.TestResult {
 		}
 	}
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Ensure all releases have a unique name",
 		Function:    utils.CallerPath(0),
 		Passed:      errorCount == 0,
 		Message:     fmt.Sprintf("Non-unique release names: %v", errorCount),
 	}
 
-	return moveResult
+	return testResult
 }

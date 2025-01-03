@@ -21,7 +21,7 @@ func DO_06() (string, pluginkit.TestSetResult) {
 func DO_06_T01() pluginkit.TestResult {
 	guideLocation := Data.Rest().Insights.Repository.Documentation.Contributing
 	found := guideLocation != ""
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Ensure the project's Security Insights data specifies a contributing guide location.",
 		Function:    utils.CallerPath(0),
 		Passed:      found,
@@ -29,5 +29,5 @@ func DO_06_T01() pluginkit.TestResult {
 		Value:       guideLocation,
 	}
 
-	return moveResult
+	return testResult
 }
