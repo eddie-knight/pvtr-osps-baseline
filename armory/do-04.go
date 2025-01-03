@@ -22,11 +22,11 @@ func DO_04() (string, pluginkit.TestSetResult) {
 func DO_04_T01() pluginkit.TestResult {
 	enabled := Data.GraphQL().Repository.IsSecurityPolicyEnabled
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Discover whether a security policy is enabled for this repo.",
 		Function:    utils.CallerPath(0),
 		Passed:      enabled,
 		Message:     fmt.Sprintf("Security Policy Enabled: %v", enabled),
 	}
-	return moveResult
+	return testResult
 }

@@ -26,7 +26,7 @@ func AC_04_T01() pluginkit.TestResult {
 	message := fmt.Sprintf("Branch Protection Prevents Deletion: %v", !allowed)
 	// TODO: check rules as well
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Passed:      !allowed,
 		Value:       fmt.Sprintf("Branch name: %s", branchName),
@@ -35,5 +35,5 @@ func AC_04_T01() pluginkit.TestResult {
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to AC_01
-	return moveResult
+	return testResult
 }

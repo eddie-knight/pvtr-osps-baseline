@@ -24,11 +24,11 @@ func DO_02_T01() pluginkit.TestResult {
 	body := Data.GraphQL().Repository.ContributingGuidelines.Body
 	containsGuidelines := len(body) > 100
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Discover whether the GitHub repo's recommended contributing guidelines has content.",
 		Function:    utils.CallerPath(0),
 		Passed:      containsGuidelines,
 		Message:     fmt.Sprintf("Contributing Guidelines Found: %v", containsGuidelines),
 	}
-	return moveResult
+	return testResult
 }

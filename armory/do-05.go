@@ -21,12 +21,12 @@ func DO_05() (string, pluginkit.TestSetResult) {
 
 func DO_05_T01() pluginkit.TestResult {
 	enabled := Data.GraphQL().Repository.HasIssuesEnabled
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Checking to see whether the GitHub repo has issues enabled",
 		Function:    utils.CallerPath(0),
 		Passed:      enabled,
 		Message:     fmt.Sprintf("Issues Enabled: %v", enabled),
 	}
 
-	return moveResult
+	return testResult
 }

@@ -19,11 +19,11 @@ func BR_01() (string, pluginkit.TestSetResult) {
 
 // TODO
 func BR_01_T01() pluginkit.TestResult {
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to BR_01
-	return moveResult
+	return testResult
 }

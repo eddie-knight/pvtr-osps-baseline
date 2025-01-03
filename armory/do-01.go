@@ -29,11 +29,11 @@ func DO_01_T01() pluginkit.TestResult {
 		message = message + "Issues are enabled."
 	}
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Discover whether issues or discussions are enabled on the repo.",
 		Function:    utils.CallerPath(0),
 		Message:     message,
 		Passed:      repoData.HasDiscussionsEnabled || repoData.HasIssuesEnabled,
 	}
-	return moveResult
+	return testResult
 }

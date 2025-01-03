@@ -18,11 +18,11 @@ func AC_05() (string, pluginkit.TestSetResult) {
 }
 
 func AC_05_T01() pluginkit.TestResult {
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "This movement is still under construction",
 		Function:    utils.CallerPath(0),
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to AC_01
-	return moveResult
+	return testResult
 }

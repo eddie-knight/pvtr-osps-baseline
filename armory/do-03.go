@@ -25,7 +25,7 @@ func DO_03_T01() pluginkit.TestResult {
 	guideLocation := Data.Rest().Insights.Project.Documentation.DetailedGuide
 	found := guideLocation != ""
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Determine whether the project's Security Insights data specifies a detailed-guide location.",
 		Function:    utils.CallerPath(0),
 		Passed:      found,
@@ -33,13 +33,13 @@ func DO_03_T01() pluginkit.TestResult {
 		Value:       guideLocation,
 	}
 
-	return moveResult
+	return testResult
 }
 
 func DO_03_T02() pluginkit.TestResult {
 	_, err := makeApiCall(Data.Rest().Insights.Project.Documentation.DetailedGuide, false)
 
-	moveResult := pluginkit.TestResult{
+	testResult := pluginkit.TestResult{
 		Description: "Verifying that an artifact exists at the location specified for the detailed-guide.",
 		Function:    utils.CallerPath(0),
 		Passed:      err == nil,
@@ -47,8 +47,8 @@ func DO_03_T02() pluginkit.TestResult {
 	}
 
 	if err != nil {
-		moveResult.Value = err
+		testResult.Value = err
 	}
 
-	return moveResult
+	return testResult
 }
