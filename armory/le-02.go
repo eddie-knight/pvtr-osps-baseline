@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )

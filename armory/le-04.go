@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
+
 	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
@@ -55,5 +56,5 @@ func LE_04_T01() raidengine.MovementResult {
 	}
 
 	// TODO: Use this section to write a single step or test that contributes to LE_04
-	return testResult
+	return moveResult
 }
