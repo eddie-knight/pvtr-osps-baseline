@@ -25,10 +25,11 @@ var (
 				DO_04,
 				DO_05,
 				DO_06,
+				BR_02,
+				BR_03,
 				BR_06,
 				AC_01,
 				QA_01,
-				BR_02,
 				AC_03,
 			},
 			"maturity_1": {
