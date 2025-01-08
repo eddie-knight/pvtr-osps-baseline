@@ -12,14 +12,16 @@ type GraphqlData struct {
 	// Need to update token for this
 	Organization struct {
 		RequiresTwoFactorAuthentication bool
+		WebCommitSignoffRequired        bool
 	} `graphql:"organization(login: $owner)"`
 
 	Repository struct {
-		Name                    string
-		HasDiscussionsEnabled   bool
-		HasIssuesEnabled        bool
-		IsSecurityPolicyEnabled bool
-		DefaultBranchRef        struct {
+		WebCommitSignoffRequired bool
+		Name                     string
+		HasDiscussionsEnabled    bool
+		HasIssuesEnabled         bool
+		IsSecurityPolicyEnabled  bool
+		DefaultBranchRef         struct {
 			Name          string
 			RefUpdateRule struct { // Docs say this works for non-admin viewers, but I haven't managed to do that yet
 				AllowsDeletions              bool
@@ -33,9 +35,25 @@ type GraphqlData struct {
 				RequiresStatusChecks     bool
 			}
 		}
+		LicenseInfo struct {
+			Name   string
+			SpdxId string
+			Url    string
+		}
 		Releases struct {
 			TotalCount int
-		}
+			Nodes      []struct {
+				TagName       string
+				IsLatest      bool
+				ReleaseAssets struct {
+					Nodes []struct {
+						Name    string
+						Url     string
+						Content string
+					}
+				}
+			}
+		} `graphql:"releases(first: 1, orderBy: {field: CREATED_AT, direction: DESC})"`
 		LatestRelease struct {
 			Description string
 		}

@@ -1,7 +1,11 @@
 package armory
 
 import (
+	"fmt"
+
 	"github.com/privateerproj/privateer-sdk/pluginkit"
+
+	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
@@ -18,12 +22,30 @@ func LE_02() (string, pluginkit.TestSetResult) {
 }
 
 // TODO
-func LE_02_T01() pluginkit.TestResult {
-	testResult := pluginkit.TestResult{
-		Description: "This movement is still under construction",
+func LE_02_T01() raidengine.MovementResult {
+	// TODO Check if this is the correct license data
+	approvedLicenses := []string{
+		"MIT", "Apache-2.0", "GPL-2.0", "GPL-3.0",
+		"LGPL-2.1", "LGPL-3.0", "BSD-2-Clause",
+		"BSD-3-Clause", "MPL-2.0", "AGPL-3.0"}
+
+	licenseID := Data.GraphQL().Repository.LicenseInfo.SpdxId
+	licenseName := Data.GraphQL().Repository.LicenseInfo.Name
+
+	isApproved := false
+
+	for _, approved := range approvedLicenses {
+		if licenseID == approved {
+			isApproved = true
+			break
+		}
+	}
+	moveResult := raidengine.MovementResult{
+		Description: "Verify repository license is OSI/FSF approved",
 		Function:    utils.CallerPath(0),
+		Passed:      isApproved,
+		Message:     fmt.Sprintf("License: %s (%s), Approved: %v", licenseName, licenseID, isApproved),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to LE_02
-	return testResult
+	return moveResult
 }
