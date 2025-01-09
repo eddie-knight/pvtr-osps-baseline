@@ -21,13 +21,13 @@ func LE_01() (string, pluginkit.TestSetResult) {
 	return "LE_01", result
 }
 
-func LE_01_T01() raidengine.MovementResult {
+func LE_01_T01() raidengine.TestResult {
 	orgRequired := Data.GraphQL().Organization.WebCommitSignoffRequired
 	repoRequired := Data.GraphQL().Repository.WebCommitSignoffRequired
 
 	required := orgRequired || repoRequired
 
-	moveResult := raidengine.MovementResult{
+	moveResult := raidengine.TestResult{
 		Description: "Inspect Org & Repo Policy to Enforce Web SignOff",
 		Function:    utils.CallerPath(0),
 		Passed:      required,

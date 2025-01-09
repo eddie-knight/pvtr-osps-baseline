@@ -5,7 +5,6 @@ import (
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 
-	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
@@ -22,7 +21,7 @@ func LE_02() (string, pluginkit.TestSetResult) {
 }
 
 // TODO
-func LE_02_T01() raidengine.MovementResult {
+func LE_02_T01() pluginkit.TestResult {
 	// TODO Check if this is the correct license data
 	approvedLicenses := []string{
 		"MIT", "Apache-2.0", "GPL-2.0", "GPL-3.0",
@@ -40,7 +39,7 @@ func LE_02_T01() raidengine.MovementResult {
 			break
 		}
 	}
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Verify repository license is OSI/FSF approved",
 		Function:    utils.CallerPath(0),
 		Passed:      isApproved,

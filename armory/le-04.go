@@ -6,8 +6,6 @@ import (
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
-
-	"github.com/privateerproj/privateer-sdk/raidengine"
 )
 
 var approvedSpdx = map[string]bool{
@@ -37,10 +35,10 @@ func LE_04() (string, pluginkit.TestSetResult) {
 	return "LE_04", result
 }
 
-func LE_04_T01() raidengine.MovementResult {
+func LE_04_T01() pluginkit.TestResult {
 	releases := Data.GraphQL().Repository.Releases
 	if releases.TotalCount == 0 {
-		return raidengine.MovementResult{
+		return pluginkit.TestResult{
 			Description: "Check release license compliance",
 			Function:    utils.CallerPath(0),
 			Passed:      false,
@@ -48,7 +46,7 @@ func LE_04_T01() raidengine.MovementResult {
 		}
 	}
 
-	return raidengine.MovementResult{
+	return pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
 		Passed:      true,
@@ -56,10 +54,10 @@ func LE_04_T01() raidengine.MovementResult {
 	}
 }
 
-func LE_04_T02() raidengine.MovementResult {
+func LE_04_T02() pluginkit.TestResult {
 	releases := Data.GraphQL().Repository.Releases
 	if releases.TotalCount == 0 {
-		return raidengine.MovementResult{
+		return pluginkit.TestResult{
 			Description: "Check release license compliance",
 			Function:    utils.CallerPath(0),
 			Passed:      false,
@@ -70,7 +68,7 @@ func LE_04_T02() raidengine.MovementResult {
 	latestRelease := releases.Nodes[0]
 	for _, asset := range latestRelease.ReleaseAssets.Nodes {
 		if strings.Contains(strings.ToLower(asset.Name), "license") {
-			return raidengine.MovementResult{
+			return pluginkit.TestResult{
 				Description: "Check release license compliance",
 				Function:    utils.CallerPath(0),
 				Passed:      true,
@@ -79,7 +77,7 @@ func LE_04_T02() raidengine.MovementResult {
 		}
 	}
 
-	return raidengine.MovementResult{
+	return pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
 		Passed:      false,
@@ -87,10 +85,10 @@ func LE_04_T02() raidengine.MovementResult {
 	}
 }
 
-func LE_04_T03() raidengine.MovementResult {
+func LE_04_T03() pluginkit.TestResult {
 	releases := Data.GraphQL().Repository.Releases
 	if releases.TotalCount == 0 {
-		return raidengine.MovementResult{
+		return pluginkit.TestResult{
 			Description: "Check release license compliance",
 			Function:    utils.CallerPath(0),
 			Passed:      false,
@@ -102,7 +100,7 @@ func LE_04_T03() raidengine.MovementResult {
 	for _, asset := range latestRelease.ReleaseAssets.Nodes {
 		if strings.Contains(strings.ToLower(asset.Name), "license") {
 			if asset.Content == "" {
-				return raidengine.MovementResult{
+				return pluginkit.TestResult{
 					Description: "Check release license compliance",
 					Function:    utils.CallerPath(0),
 					Passed:      false,
@@ -113,7 +111,7 @@ func LE_04_T03() raidengine.MovementResult {
 			upperContent := strings.ToUpper(asset.Content)
 			for spdxId := range approvedSpdx {
 				if strings.Contains(upperContent, spdxId) {
-					return raidengine.MovementResult{
+					return pluginkit.TestResult{
 						Description: "Check release license compliance",
 						Function:    utils.CallerPath(0),
 						Passed:      true,
@@ -122,7 +120,7 @@ func LE_04_T03() raidengine.MovementResult {
 				}
 			}
 
-			return raidengine.MovementResult{
+			return pluginkit.TestResult{
 				Description: "Check release license compliance",
 				Function:    utils.CallerPath(0),
 				Passed:      false,
@@ -131,7 +129,7 @@ func LE_04_T03() raidengine.MovementResult {
 		}
 	}
 
-	return raidengine.MovementResult{
+	return pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
 		Passed:      false,

@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
-	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
@@ -21,7 +20,7 @@ func LE_03() (string, pluginkit.TestSetResult) {
 	return "LE_03", result
 }
 
-func LE_03_T01() raidengine.MovementResult {
+func LE_03_T01() pluginkit.TestResult {
 	license := Data.graphql.Repository.LicenseInfo
 	licensePath := Data.graphql.Repository.LicenseInfo.Url
 
@@ -61,7 +60,7 @@ func LE_03_T01() raidengine.MovementResult {
 		}
 	}
 
-	moveResult := raidengine.MovementResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Verify license is present in a standard location",
 		Function:    utils.CallerPath(0),
 		Passed:      hasValidLicense && hasStandardPath,
