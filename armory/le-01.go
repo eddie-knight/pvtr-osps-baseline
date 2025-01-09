@@ -5,7 +5,6 @@ import (
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 
-	"github.com/privateerproj/privateer-sdk/raidengine"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
@@ -21,13 +20,13 @@ func LE_01() (string, pluginkit.TestSetResult) {
 	return "LE_01", result
 }
 
-func LE_01_T01() raidengine.TestResult {
+func LE_01_T01() pluginkit.TestResult {
 	orgRequired := Data.GraphQL().Organization.WebCommitSignoffRequired
 	repoRequired := Data.GraphQL().Repository.WebCommitSignoffRequired
 
 	required := orgRequired || repoRequired
 
-	moveResult := raidengine.TestResult{
+	moveResult := pluginkit.TestResult{
 		Description: "Inspect Org & Repo Policy to Enforce Web SignOff",
 		Function:    utils.CallerPath(0),
 		Passed:      required,
