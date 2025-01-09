@@ -47,9 +47,11 @@ type GraphqlData struct {
 				IsLatest      bool
 				ReleaseAssets struct {
 					Nodes []struct {
-						Name    string
-						Url     string
-						Content string
+						Name        string
+						Url         string
+						DownloadUrl string
+						Size        int
+						ContentType string
 					}
 				}
 			}
