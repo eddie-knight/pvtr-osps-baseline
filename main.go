@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/eddie-knight/privateer-osps-baseline/cmd"
+	"github.com/eddie-knight/pvtr-osps-baseline/cmd"
 )
 
 var (

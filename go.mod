@@ -1,4 +1,4 @@
-module github.com/eddie-knight/privateer-osps-baseline
+module github.com/eddie-knight/pvtr-osps-baseline
 
 go 1.23
 
