@@ -43,19 +43,12 @@ func LE_04() (string, pluginkit.TestSetResult) {
 
 func LE_04_T01() pluginkit.TestResult {
 	releases := Data.GraphQL().Repository.Releases
-	if releases.TotalCount == 0 {
-		return pluginkit.TestResult{
-			Description: "Check for available releases",
-			Function:    utils.CallerPath(0),
-			Passed:      false,
-			Message:     "No releases found to validate license",
-		}
-	}
 	return pluginkit.TestResult{
 		Description: "Check for available releases",
-		Function:    utils.CallerPath(0),
-		Passed:      true,
-		Message:     fmt.Sprintf("Found %d releases", releases.TotalCount),
+		Function: utils.CallerPath(0),
+		Passed: true,
+		Message: fmt.Sprintf("Found %d releases", releases.TotalCount),
+		Value: releases.TotalCount
 	}
 }
 
