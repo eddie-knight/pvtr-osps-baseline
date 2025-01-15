@@ -2,8 +2,6 @@ package armory
 
 import (
 	"fmt"
-	"io"
-	"net/http"
 	"strings"
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
@@ -31,12 +29,12 @@ func LE_04() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(LE_04_T01)
-	if result.Tests["LE_04_T01"].Value > 0 {
-            result.ExecuteTest(LE_04_T02)
+	if count, ok := result.Tests["LE_04_T01"].Value.(int); ok && count > 0 {
+		result.ExecuteTest(LE_04_T02)
 	}
 	if result.Tests["LE_04_T02"].Passed {
-	    result.ExecuteTest(LE_04_T03)
-        }
+		result.ExecuteTest(LE_04_T03)
+	}
 
 	return "LE_04", result
 }
@@ -45,116 +43,75 @@ func LE_04_T01() pluginkit.TestResult {
 	releases := Data.GraphQL().Repository.Releases
 	return pluginkit.TestResult{
 		Description: "Check for available releases",
-		Function: utils.CallerPath(0),
-		Passed: true,
-		Message: fmt.Sprintf("Found %d releases", releases.TotalCount),
-		Value: releases.TotalCount
+		Function:    utils.CallerPath(0),
+		Passed:      true,
+		Message:     fmt.Sprintf("Found %d releases", releases.TotalCount),
+		Value:       releases.TotalCount,
 	}
 }
 
 func LE_04_T02() pluginkit.TestResult {
-	releases := Data.GraphQL().Repository.Releases
-	if releases.TotalCount == 0 {
-		return pluginkit.TestResult{
-			Description: "Check release license compliance",
-			Function:    utils.CallerPath(0),
-			Passed:      false,
-			Message:     "No releases to check for license",
-		}
-	}
-
-	latestRelease := releases.Nodes[0]
-	for _, asset := range latestRelease.ReleaseAssets.Nodes {
-		if strings.Contains(strings.ToLower(asset.Name), "license") {
-			return pluginkit.TestResult{
-				Description: "Check release license compliance",
-				Function:    utils.CallerPath(0),
-				Passed:      true,
-				Message:     fmt.Sprintf("Found license file: %s", asset.Name),
-			}
-		}
-	}
-
-	return pluginkit.TestResult{
+	// Set up the default result
+	testResult := pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
 		Passed:      false,
-		Message:     fmt.Sprintf("No license file found in release %s", latestRelease.TagName),
+		Message:     "No license file found",
 	}
+
+	releases := Data.GraphQL().Repository.Releases
+	latestRelease := releases.Nodes[0]
+
+	// Adjust our default message to reflect the actual release
+	testResult.Message = fmt.Sprintf("No license file found in release %s", latestRelease.TagName)
+
+	for _, asset := range latestRelease.ReleaseAssets.Nodes {
+		if strings.Contains(strings.ToLower(asset.Name), "license") {
+			testResult.Passed = true
+			testResult.Message = fmt.Sprintf("Found license file: %s", asset.Name)
+			break
+		}
+	}
+
+	return testResult
 }
 
 func LE_04_T03() pluginkit.TestResult {
-	releases := Data.GraphQL().Repository.Releases
-	if releases.TotalCount == 0 {
-		return pluginkit.TestResult{
-			Description: "Check release license compliance",
-			Function:    utils.CallerPath(0),
-			Passed:      false,
-			Message:     "No releases to validate license",
-		}
-	}
-
-	latestRelease := releases.Nodes[0]
-	for _, asset := range latestRelease.ReleaseAssets.Nodes {
-		if strings.Contains(strings.ToLower(asset.Name), "license") {
-			content, err := fetchLicenseContent(asset.DownloadUrl)
-			if err != nil {
-				return pluginkit.TestResult{
-					Description: "Check release license compliance",
-					Function:    utils.CallerPath(0),
-					Passed:      false,
-					Message:     fmt.Sprintf("Failed to fetch license content: %v", err),
-				}
-			}
-
-			upperContent := strings.ToUpper(content)
-			for spdxId := range approvedSpdx {
-				if strings.Contains(upperContent, spdxId) {
-					return pluginkit.TestResult{
-						Description: "Check release license compliance",
-						Function:    utils.CallerPath(0),
-						Passed:      true,
-						Message:     fmt.Sprintf("Valid SPDX license found: %s", spdxId),
-					}
-				}
-			}
-		}
-	}
-
-	return pluginkit.TestResult{
+	// Default test result
+	testResult := pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
 		Passed:      false,
 		Message:     "No valid license found in release assets",
 	}
-}
 
-func fetchLicenseContent(url string) (string, error) {
-	request, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return "", err
+	releases := Data.GraphQL().Repository.Releases
+	latestRelease := releases.Nodes[0]
+
+	for _, asset := range latestRelease.ReleaseAssets.Nodes {
+		if strings.Contains(strings.ToLower(asset.Name), "license") {
+			rest := Data.Rest()
+			content, err := rest.GetFileContentByURL(asset.DownloadUrl)
+			if err != nil {
+				testResult.Message = fmt.Sprintf("Failed to fetch license content: %v", err)
+				break // We can break or return early. Here we break so we can still return testResult below.
+			}
+
+			upperContent := strings.ToUpper(content)
+			for spdxId := range approvedSpdx {
+				if strings.Contains(upperContent, spdxId) {
+					testResult.Passed = true
+					testResult.Message = fmt.Sprintf("Valid SPDX license found: %s", spdxId)
+					break
+				}
+			}
+
+			// If we found it, no need to keep checking other assets
+			if testResult.Passed {
+				break
+			}
+		}
 	}
 
-	token := GlobalConfig.GetString("token")
-	if token != "" {
-		request.Header.Set("Authorization", "Bearer "+token)
-	}
-
-	client := &http.Client{}
-	response, err := client.Do(request)
-	if err != nil {
-		return "", fmt.Errorf("error making http call: %s", err.Error())
-	}
-	defer response.Body.Close()
-
-	if response.StatusCode != 200 {
-		return "", fmt.Errorf("unexpected response: %s", response.Status)
-	}
-
-	content, err := io.ReadAll(response.Body)
-	if err != nil {
-		return "", err
-	}
-
-	return string(content), nil
+	return testResult
 }
