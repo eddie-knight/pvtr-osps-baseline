@@ -24,25 +24,24 @@ func BR_06() (string, pluginkit.TestSetResult) {
 }
 
 func BR_06_T01() pluginkit.TestResult {
-	releaseCount := Data.GraphQL().Repository.Releases.TotalCount
-
-	return pluginkit.TestResult{
-		Description: "Checking whether project has releases, passing if no releases are present",
-		Function:    utils.CallerPath(0),
-		Passed:      true,
-		Message:     fmt.Sprintf("Releases Found: %v", releaseCount),
-	}
+	return countReleases()
 }
 
 func BR_06_T02() pluginkit.TestResult {
-	releaseDescription := Data.GraphQL().Repository.LatestRelease.Description
-	contains := (strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog"))
-
 	testResult := pluginkit.TestResult{
 		Description: "Checking whether project has releases, passing if no releases are present",
 		Function:    utils.CallerPath(0),
-		Passed:      contains,
-		Message:     fmt.Sprintf("Change Log Found in Latest Release: %v", contains),
+	}
+
+	if !Authenticated {
+		// TODO: This be a REST call, just grab the first releases entry "body" instead of graphql latest "description"
+		testResult.Passed = false
+		testResult.Message = "Not authenticated, cannot continue"
+	} else {
+		releaseDescription := Data.GraphQL().Repository.LatestRelease.Description
+		contains := (strings.Contains(releaseDescription, "Change Log") || strings.Contains(releaseDescription, "Changelog"))
+		testResult.Passed = contains
+		testResult.Message = fmt.Sprintf("Change Log Found in Latest Release: %v", contains)
 	}
 	return testResult
 }

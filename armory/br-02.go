@@ -23,18 +23,7 @@ func BR_02() (string, pluginkit.TestSetResult) {
 }
 
 func BR_02_T01() pluginkit.TestResult {
-	releases := Data.Rest().Repo.Releases
-
-	testResult := pluginkit.TestResult{
-		Description: "Discover all releases on the repository",
-		Function:    utils.CallerPath(0),
-		Passed:      true,
-		Value:       releases,
-		Message:     fmt.Sprintf("Releases found: %v", len(releases)),
-	}
-
-	// TODO: Use this section to write a single step or test that contributes to BR_01
-	return testResult
+	return countReleases()
 }
 
 func BR_02_T02() pluginkit.TestResult {
