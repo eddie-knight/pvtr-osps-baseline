@@ -96,6 +96,7 @@ func unauthenticatedTestSuites() map[string][]pluginkit.TestSet {
 		"dev": {
 			QA_01,
 			BR_02,
+			BR_06,
 		},
 		"maturity_1": {},
 		"maturity_2": {},
