@@ -18,6 +18,5 @@ func countReleases() pluginkit.TestResult {
 		Message:     fmt.Sprintf("Releases found: %v", len(releases)),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to BR_01
 	return testResult
 }
