@@ -2,7 +2,6 @@ package armory
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
@@ -16,7 +15,7 @@ func BR_02() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(BR_02_T01)
-	if !strings.Contains(result.Tests["BR_02_T01"].Message, ": 0") {
+	if result.Tests["BR_02_T01"].Value.(int) > 0 {
 		result.ExecuteTest(BR_02_T02)
 	}
 	return "BR_02", result

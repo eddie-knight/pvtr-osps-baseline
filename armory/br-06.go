@@ -16,7 +16,7 @@ func BR_06() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(BR_06_T01)
-	if !strings.Contains(result.Tests["BR_06_T01"].Message, ": 0") {
+	if result.Tests["BR_06_T01"].Value.(int) > 0 {
 		Logger.Trace("Releases Found, checking for Change Log")
 		result.ExecuteTest(BR_06_T02)
 	}

@@ -40,22 +40,6 @@ type GraphqlData struct {
 			SpdxId string
 			Url    string
 		}
-		Releases struct {
-			TotalCount int
-			Nodes      []struct {
-				TagName       string
-				IsLatest      bool
-				ReleaseAssets struct {
-					Nodes []struct {
-						Name        string
-						Url         string
-						DownloadUrl string
-						Size        int
-						ContentType string
-					}
-				}
-			}
-		} `graphql:"releases(first: 1, orderBy: {field: CREATED_AT, direction: DESC})"`
 		LatestRelease struct {
 			Description string
 		}

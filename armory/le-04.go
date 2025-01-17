@@ -2,23 +2,25 @@ package armory
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/privateerproj/privateer-sdk/pluginkit"
 	"github.com/privateerproj/privateer-sdk/utils"
 )
 
-var approvedSpdx = map[string]bool{
-	"MIT":          true,
-	"GPL-2.0":      true,
-	"GPL-3.0":      true,
-	"BSD-2-CLAUSE": true,
-	"BSD-3-CLAUSE": true,
-	"APACHE-2.0":   true,
-	"LGPL-2.1":     true,
-	"LGPL-3.0":     true,
-	"MPL-2.0":      true,
-	"EPL-2.0":      true,
+// TODO: this is common between LE-03 and LE-04
+var approvedLicenses = []string{
+	"MIT",
+	"GPL-2.0",
+	"GPL-3.0",
+	"BSD-2-CLAUSE",
+	"BSD-3-CLAUSE",
+	"APACHE-2.0",
+	"LGPL-2.1",
+	"LGPL-3.0",
+	"MPL-2.0",
+	"EPL-2.0",
 }
 
 func LE_04() (string, pluginkit.TestSetResult) {
@@ -29,10 +31,10 @@ func LE_04() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(LE_04_T01)
-	if count, ok := result.Tests["LE_04_T01"].Value.(int); ok && count > 0 {
+	if result.Tests["LE_04_T01"].Value.(int) > 0 {
 		result.ExecuteTest(LE_04_T02)
 	}
-	if result.Tests["LE_04_T02"].Passed {
+	if result.Tests["LE_04_T02"].Value.(bool) {
 		result.ExecuteTest(LE_04_T03)
 	}
 
@@ -40,14 +42,7 @@ func LE_04() (string, pluginkit.TestSetResult) {
 }
 
 func LE_04_T01() pluginkit.TestResult {
-	releases := Data.GraphQL().Repository.Releases
-	return pluginkit.TestResult{
-		Description: "Check for available releases",
-		Function:    utils.CallerPath(0),
-		Passed:      true,
-		Message:     fmt.Sprintf("Found %d releases", releases.TotalCount),
-		Value:       releases.TotalCount,
-	}
+	return countReleases()
 }
 
 func LE_04_T02() pluginkit.TestResult {
@@ -55,20 +50,19 @@ func LE_04_T02() pluginkit.TestResult {
 	testResult := pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
-		Passed:      false,
+		Passed:      true,
 		Message:     "No license file found",
+		Value:       false,
 	}
 
-	releases := Data.GraphQL().Repository.Releases
-	latestRelease := releases.Nodes[0]
+	latestRelease := Data.Rest().Repo.Releases[0]
 
-	// Adjust our default message to reflect the actual release
 	testResult.Message = fmt.Sprintf("No license file found in release %s", latestRelease.TagName)
 
-	for _, asset := range latestRelease.ReleaseAssets.Nodes {
+	for _, asset := range latestRelease.Assets {
 		if strings.Contains(strings.ToLower(asset.Name), "license") {
-			testResult.Passed = true
 			testResult.Message = fmt.Sprintf("Found license file: %s", asset.Name)
+			testResult.Value = true
 			break
 		}
 	}
@@ -81,37 +75,28 @@ func LE_04_T03() pluginkit.TestResult {
 	testResult := pluginkit.TestResult{
 		Description: "Check release license compliance",
 		Function:    utils.CallerPath(0),
-		Passed:      false,
-		Message:     "No valid license found in release assets",
+		Message:     "No license detected in the latest release assets",
+		Passed:      true, // Assume this passes until a bad license is found
 	}
 
-	releases := Data.GraphQL().Repository.Releases
-	latestRelease := releases.Nodes[0]
+	latestRelease := Data.Rest().Repo.Releases[0]
 
-	for _, asset := range latestRelease.ReleaseAssets.Nodes {
+	foundValue := []string{}
+	for _, asset := range latestRelease.Assets {
 		if strings.Contains(strings.ToLower(asset.Name), "license") {
-			rest := Data.Rest()
-			content, err := rest.GetFileContentByURL(asset.DownloadUrl)
+			foundValue = append(foundValue, asset.Name)
+			content, err := getFileContentByURL(asset.DownloadURL)
 			if err != nil {
-				testResult.Message = fmt.Sprintf("Failed to fetch license content: %v", err)
-				break // We can break or return early. Here we break so we can still return testResult below.
-			}
-
-			upperContent := strings.ToUpper(content)
-			for spdxId := range approvedSpdx {
-				if strings.Contains(upperContent, spdxId) {
-					testResult.Passed = true
-					testResult.Message = fmt.Sprintf("Valid SPDX license found: %s", spdxId)
-					break
-				}
-			}
-
-			// If we found it, no need to keep checking other assets
-			if testResult.Passed {
+				testResult.Message = fmt.Sprintf("Found an apparent license entry, but failed to fetch content: %v", err)
 				break
+			}
+			upperContent := strings.ToUpper(content)
+			if !slices.Contains(approvedLicenses, upperContent) {
+				testResult.Passed = false
+				testResult.Message = fmt.Sprintf("Invalid license found in release assets: %s", asset.Name)
 			}
 		}
 	}
-
+	testResult.Value = foundValue
 	return testResult
 }
