@@ -25,6 +25,7 @@ type RepoData struct {
 		TopLevel []DirContents
 		ForgeDir []DirContents
 	}
+	WorkflowPermissions WorkflowPermissions
 }
 
 type ReleaseData struct {
@@ -48,6 +49,11 @@ type DirContents struct {
 type FileAPIResponse struct {
 	ByteContent []byte `json:"content"`
 	SHA         string `json:"sha"`
+}
+
+type WorkflowPermissions struct {
+	DefaultWorkflowPermissions string `json:"default_workflow_permissions"`
+	CanApprovePullRequest      bool   `json:"can_approve_pull_request_reviews"`
 }
 
 var APIBase = "https://api.github.com/repos"
@@ -178,4 +184,33 @@ func (r *RepoData) getReleases(owner, repo string) error {
 		return err
 	}
 	return json.Unmarshal(responseData, &r.Releases)
+}
+
+func (r *RestData) getWorkflowPermissions() (WorkflowPermissions, error) {
+	if r.Repo.WorkflowPermissions != (WorkflowPermissions{}) {
+		return r.Repo.WorkflowPermissions, nil
+	}
+
+	endpoint := fmt.Sprintf("%s/%s/%s/actions/permissions/workflow", APIBase, r.owner, r.repo)
+	responseData, err := makeApiCall(endpoint, true)
+	if err != nil {
+		return WorkflowPermissions{}, err
+	}
+
+	var permResp WorkflowPermissions
+	if err := json.Unmarshal(responseData, &permResp); err != nil {
+		return WorkflowPermissions{}, fmt.Errorf("failed to parse permissions: %v", err)
+	}
+
+	return permResp, nil
+}
+
+func (r *RestData) GetFileContentByURL(downloadURL string) (string, error) {
+	// Call the same low-level function used by the rest of your data-rest flows
+	responseData, err := makeApiCall(downloadURL, true)
+	if err != nil {
+		return "", err
+	}
+	// Convert the raw bytes to a string and return
+	return string(responseData), nil
 }
