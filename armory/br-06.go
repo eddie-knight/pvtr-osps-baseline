@@ -34,7 +34,7 @@ func BR_06_T02() pluginkit.TestResult {
 	}
 
 	if !Authenticated {
-		// TODO: This be a REST call, just grab the first releases entry "body" instead of graphql latest "description"
+		// TODO: This could be a REST call, just grab the first releases entry "body" instead of graphql latest "description"
 		testResult.Passed = false
 		testResult.Message = "Not authenticated, cannot continue"
 	} else {
