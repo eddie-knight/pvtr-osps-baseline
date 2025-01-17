@@ -179,3 +179,13 @@ func (r *RepoData) getReleases(owner, repo string) error {
 	}
 	return json.Unmarshal(responseData, &r.Releases)
 }
+
+func (r *RestData) GetFileContentByURL(downloadURL string) (string, error) {
+	// Call the same low-level function used by the rest of your data-rest flows
+	responseData, err := makeApiCall(downloadURL, true)
+	if err != nil {
+		return "", err
+	}
+	// Convert the raw bytes to a string and return
+	return string(responseData), nil
+}
