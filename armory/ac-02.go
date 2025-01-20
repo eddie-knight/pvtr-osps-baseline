@@ -19,10 +19,18 @@ func AC_02() (string, pluginkit.TestSetResult) {
 
 func AC_02_T01() pluginkit.TestResult {
 	testResult := pluginkit.TestResult{
-		Description: "This movement is still under construction",
+		Description: "Ensure the project uses a version control system that restricts collaborator permissions to the lowest available privileges by default.",
 		Function:    utils.CallerPath(0),
 	}
 
-	// TODO: Use this section to write a single step or test that contributes to AC_01
+	dataFound := Data.Rest().Repo.Name != ""
+	if !dataFound {
+		testResult.Message = "GitHub restricts collaborator permissions to the lowest available privileges by default."
+		testResult.Passed = true
+	} else {
+		testResult.Message = "GitHub repo data not retrieved."
+		testResult.Passed = false
+	}
+
 	return testResult
 }

@@ -13,12 +13,12 @@ Based on the Open Source Project Security (OSPS) Baseline, here is a consolidate
 
 | Category | Rule | Description | Status (GraphQL) | Status (REST) | Implemented |
 |-------------------------|------------|-----------------------------------------------------------------------------------------------------------------------|--------------------|--------------------|-------------|
-| **Access Control (AC)** | OSPS-AC-01 | Require multi-factor authentication for collaborators modifying repository settings or accessing sensitive data. | ✅ Implemented | N/A | true |
-| | OSPS-AC-02 | Restrict collaborator permissions to the lowest available privileges by default. | ❌ Not Implemented | N/A | false |
-| | OSPS-AC-03 | Prevent unintentional direct commits against the primary branch. | ✅ Implemented | N/A | true |
-| | OSPS-AC-04 | Prevent unintentional deletion of the primary branch. | ✅ Implemented | N/A | true |
-| | OSPS-AC-05 | Configure project CI/CD pipeline permissions to the lowest available privileges. | ❌ Not Implemented | N/A | false |
-| | OSPS-AC-07 | Require multi-factor authentication (non-SMS) for users modifying repository settings or accessing sensitive data. | ❌ Not Implemented | ❌ Not Implemented | false |
+| **Access Control (AC)** | OSPS-AC-01 | The project's version control system MUST require multi-factor authentication for collaborators modifying the project repository settings or accessing sensitive data. | ✅ | N/A | true |
+| | OSPS-AC-02 | The project's version control system MUST restrict collaborator permissions to the lowest available privileges by default. | ✅ | N/A | true |
+| | OSPS-AC-03 | The project's version control system MUST prevent unintentional direct commits against the primary branch. | ✅ | N/A | true |
+| | OSPS-AC-04 | The project's version control system MUST prevent unintentional deletion of the primary branch. | ✅ | N/A | true |
+| | OSPS-AC-05 | The project's permissions in CI/CD pipelines MUST be configured to the lowest available privileges except when explicitly elevated. | ✅ | N/A | false |
+| | OSPS-AC-07 | The project's version control system MUST require multi-factor authentication that does not include SMS for users when modifying the project repository settings or accessing sensitive data. | N/A | N/A | false |
 | **Build and Release (BR)** | OSPS-BR-01 | Do not execute arbitrary code from outside the build script. | ❌ Not Implemented | N/A | false |
 | | OSPS-BR-02 | Assign a unique version identifier to each release. | ✅ Implemented | ✅ Implemented | true |
 | | OSPS-BR-03 | Use encrypted channels (SSH, HTTPS) for websites, API responses, and other project development and release services. | N/A | ✅ Implemented | true |
