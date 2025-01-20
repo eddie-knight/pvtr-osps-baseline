@@ -212,7 +212,7 @@ func (r *RestData) getWorkflowPermissions() (WorkflowPermissions, error) {
 	return permResp, nil
 }
 
-func (r *RestData) GetFileContentByURL(downloadURL string) (string, error) {
+func getFileContentByURL(downloadURL string) (string, error) {
 	responseData, err := makeApiCall(downloadURL, false)
 	if err != nil {
 		return "", err
