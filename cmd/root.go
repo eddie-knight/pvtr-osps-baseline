@@ -23,7 +23,7 @@ var (
 		Use:   PluginName,
 		Short: fmt.Sprintf("Test suite for %s.", PluginName),
 		PersistentPreRun: func(cmd *cobra.Command, args []string) {
-			// optional
+			command.ReadConfig()
 		},
 		Run: func(cmd *cobra.Command, args []string) {
 			// Serve plugin

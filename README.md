@@ -1,4 +1,4 @@
-# Privateer Plugin osps-baseline
+# Privateer Plugin for GitHub Repos
 
 This wireframe is designed to quickly get your service pack repository up to speed!
 

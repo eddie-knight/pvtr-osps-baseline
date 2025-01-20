@@ -2,9 +2,12 @@ loglevel: Debug
 write-directory: output
 services:
   my-project:
-    tactics: 
-      - maturity_1
-      - maturity_2
-      - maturity_3
+    plugin: pvtr-github-repo
+    test-suites:
+      - dev
+      # - maturity_1
+      # - maturity_2
+      # - maturity_3
     vars:
-      repo_url: https://github.com/myorg/myrepo
+      owner: ossf
+      repo: security-insights-spec
