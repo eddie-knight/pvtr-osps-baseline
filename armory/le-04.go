@@ -31,10 +31,10 @@ func LE_04() (string, pluginkit.TestSetResult) {
 	}
 
 	result.ExecuteTest(LE_04_T01)
-	if result.Tests["LE_04_T01"].Value.(int) > 0 {
+	if v, ok := result.Tests["LE_04_T01"].Value.(int); ok && v > 0 {
 		result.ExecuteTest(LE_04_T02)
 	}
-	if result.Tests["LE_04_T02"].Value.(bool) {
+	if v, ok := result.Tests["LE_04_T02"].Value.(bool); ok && v {
 		result.ExecuteTest(LE_04_T03)
 	}
 
