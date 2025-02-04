@@ -49,5 +49,3 @@ require (
 
 // Uncomment if you're working locally on a privateer SDK improvement
 // replace github.com/privateerproj/privateer-sdk => ../privateer-sdk
-
-replace github.com/ossf/si-tooling/v2 => ../../openssf/si-tooling/v2
