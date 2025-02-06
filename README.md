@@ -19,13 +19,15 @@ Based on the Open Source Project Security (OSPS) Baseline, here is a consolidate
 | | OSPS-AC-04 | The project's version control system MUST prevent unintentional deletion of the primary branch. | ✅ | N/A | true |
 | | OSPS-AC-05 | The project's permissions in CI/CD pipelines MUST be configured to the lowest available privileges except when explicitly elevated. | ✅ | N/A | false |
 | | OSPS-AC-07 | The project's version control system MUST require multi-factor authentication that does not include SMS for users when modifying the project repository settings or accessing sensitive data. | N/A | N/A | false |
-| **Build and Release (BR)** | OSPS-BR-01 | Do not execute arbitrary code from outside the build script. | ❌ Not Implemented | N/A | false |
-| | OSPS-BR-02 | Assign a unique version identifier to each release. | ✅ Implemented | ✅ Implemented | true |
-| | OSPS-BR-03 | Use encrypted channels (SSH, HTTPS) for websites, API responses, and other project development and release services. | N/A | ✅ Implemented | true |
-| | OSPS-BR-04 | Create all released software assets with consistent, automated build and release pipelines. | ❌ Not Implemented | N/A | false |
-| | OSPS-BR-05 | Use standardized tooling to ingest dependencies at build time. | ❌ Not Implemented | N/A | false |
-| | OSPS-BR-06 | Provide a descriptive change log for all releases. | ✅ Implemented | N/A | true |
-| | OSPS-BR-08 | Sign or account for all released software assets in a signed manifest including cryptographic hashes. | N/A | ✅ Implemented | true |
+| **Build and Release (BR)** | OSPS-BR-01 | The project’s build and release pipelines MUST NOT permit untrusted input that allows access to privileged resources. | ❌ Not Implemented | N/A | false |
+| | OSPS-BR-02 | All releases and released software assets MUST be assigned a unique version identifier for each release intended to be used by users. | ✅ Implemented | ✅ Implemented | true |
+| | OSPS-BR-03 | Any websites and version control systems involved in the project development MUST be delivered using SSH, HTTPS, or other encrypted channels. | N/A | ✅ Implemented | true |
+| | OSPS-BR-04 | All released software assets MUST be created with consistent, automated build and release pipelines. | ❌ Not Implemented | N/A | false |
+| | OSPS-BR-05 | All build and release pipelines MUST use standardized tooling where available to ingest dependencies at build time. | ❌ Not Implemented | N/A | false |
+| | OSPS-BR-06 | All releases MUST provide a descriptive log of functional and security modifications. | ✅ Implemented | N/A | true |
+| | OSPS-BR-08 | All released software assets MUST be signed or accounted for in a signed manifest including each asset’s cryptographic hashes. | N/A | ✅ Implemented | true |
+| | OSPS-BR-09 | Any websites or other services involved in the distribution of released software assets MUST be delivered using HTTPS or other encrypted channels. | N/A | ❌ Not Implemented | false |
+| | OSPS-BR-10 | Any websites, API responses or other services involved in release pipelines MUST be fetched using SSH, HTTPS or other encrypted channels. | N/A | ❌ Not Implemented | false |
 | **Documentation (DO)** | OSPS-DO-03 | Provide user guides for all basic functionalities. | N/A | ✅ Implemented | true |
 | | OSPS-DO-05 | Include a mechanism for reporting defects in project documentation. | ✅ Implemented | N/A | true |
 | | OSPS-DO-12 | Include instructions to verify the integrity and authenticity of release assets, including the expected signer identity. | ❌ Not Implemented | N/A | false |
