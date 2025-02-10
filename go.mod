@@ -7,7 +7,7 @@ require (
 	github.com/ossf/si-tooling/v2 v2.0.4
 	github.com/privateerproj/privateer-sdk v0.6.1
 	github.com/shurcooL/githubv4 v0.0.0-20240727222349-48295856cce7
-	golang.org/x/oauth2 v0.25.0
+	golang.org/x/oauth2 v0.26.0
 )
 
 require (
