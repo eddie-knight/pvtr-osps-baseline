@@ -9,7 +9,7 @@ import (
 
 func AC_04() (string, pluginkit.TestSetResult) {
 	result := pluginkit.TestSetResult{
-		Description: "The project’s version control system MUST prevent unintentional deletion of the primary branch.",
+		Description: "The project's version control system MUST prevent unintentional deletion of the primary branch.",
 		ControlID:   "OSPS-AC-04",
 		Tests:       make(map[string]pluginkit.TestResult),
 	}

@@ -7,7 +7,7 @@ import (
 
 func AC_02() (string, pluginkit.TestSetResult) {
 	result := pluginkit.TestSetResult{
-		Description: "The project’s version control system MUST restrict collaborator permissions to the lowest available privileges by default.",
+		Description: "The project's version control system MUST restrict collaborator permissions to the lowest available privileges by default.",
 		ControlID:   "OSPS-AC-02",
 		Tests:       make(map[string]pluginkit.TestResult),
 	}

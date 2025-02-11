@@ -9,7 +9,7 @@ import (
 
 func BR_03() (string, pluginkit.TestSetResult) {
 	result := pluginkit.TestSetResult{
-		Description: "Any websites, API responses or other services involved in the project development and release MUST be delivered using SSH, HTTPS or other encrypted channels.",
+		Description: "Any websites and version control systems involved in the project development MUST be delivered using SSH, HTTPS, or other encrypted channels.",
 		ControlID:   "OSPS-BR-03",
 		Tests:       make(map[string]pluginkit.TestResult),
 	}

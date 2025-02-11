@@ -10,7 +10,7 @@ import (
 
 func LE_03() (string, pluginkit.TestSetResult) {
 	result := pluginkit.TestSetResult{
-		Description: "The license for the source code MUST be maintained in a standard location within the project’s repository.",
+		Description: "The license for the source code MUST be maintained in a standard location within the project's repository.",
 		ControlID:   "OSPS-LE-03",
 		Tests:       make(map[string]pluginkit.TestResult),
 	}

@@ -7,7 +7,7 @@ import (
 
 func BR_01() (string, pluginkit.TestSetResult) {
 	result := pluginkit.TestSetResult{
-		Description: "The project’s build and release pipelines MUST NOT execute arbitrary code that is input from outside of the build script.",
+		Description: "The project's build and release pipelines MUST NOT permit untrusted input that allows access to privileged resources.",
 		ControlID:   "OSPS-BR-01",
 		Tests:       make(map[string]pluginkit.TestResult),
 	}
